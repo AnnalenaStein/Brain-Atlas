@@ -1,0 +1,69 @@
+:root {
+    /* Backgrounds */
+    --bg-app: #0b0b0c;
+    --bg-input: #1a1a1a;
+    --bg-dropdown: #111827;
+    --bg-tag: #1f2937;
+    --bg-tag-hover: #374151;
+  
+    /* Borders */
+    --border-default: #4b5563;
+    --border-light: #374151;
+  
+    /* Text colors by hierarchy */
+    --text-heading: #ffffff;
+    --text-subheading: #e5e7eb;
+    --text-body: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-label: #6b7280;
+  }
+  
+  /* Tailwind utility overrides (optional helper classes) */
+  .bg-bg {
+    background-color: var(--bg-app);
+  }
+  
+  .bg-input {
+    background-color: var(--bg-input);
+  }
+  
+  .bg-dropdown {
+    background-color: var(--bg-dropdown);
+  }
+  
+  .bg-tag {
+    background-color: var(--bg-tag);
+  }
+  
+  .hover\\:bg-tagHover:hover {
+    background-color: var(--bg-tag-hover);
+  }
+  
+  .border-border {
+    border-color: var(--border-default);
+  }
+  
+  .border-borderLight {
+    border-color: var(--border-light);
+  }
+  
+  .text-heading {
+    color: var(--text-heading);
+  }
+  
+  .text-subheading {
+    color: var(--text-subheading);
+  }
+  
+  .text-base {
+    color: var(--text-body);
+  }
+  
+  .text-muted {
+    color: var(--text-muted);
+  }
+  
+  .text-label {
+    color: var(--text-label);
+  }
+  
