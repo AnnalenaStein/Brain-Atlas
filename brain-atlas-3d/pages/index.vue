@@ -1,88 +1,65 @@
 <template>
-    <div>
-        <canvas ref="canvas"></canvas>
+  <div class="flex flex-col items-center justify-center min-h-screen bg-black text-white px-4">
+    <h1 class="text-3xl md:text-5xl font-semibold mb-6 text-center">Explore Brain Activity</h1>
+
+    <div class="w-full max-w-xl mb-4">
+      <label class="block text-sm text-gray-400 mb-1" for="activityInput">
+        Type in an activity to view brain responses
+      </label>
+      <input
+        id="activityInput"
+        v-model="searchQuery"
+        type="text"
+        placeholder="Playing an Instrument"
+        @keyup.enter="handleEnter"
+        class="w-full px-4 py-2 rounded-md bg-black border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-white placeholder-gray-500"
+      />
     </div>
+
+    <div class="mb-6 w-full max-w-xl text-left">
+      <p class="text-sm text-gray-400 mb-2">Popular Activity</p>
+      <div class="flex flex-wrap justify-start gap-2">
+        <button
+          v-for="item in popularActivities"
+          :key="item"
+          @click="searchQuery = item"
+          class="px-3 py-1 rounded bg-gray-800 hover:bg-gray-700 text-white text-sm"
+        >
+          {{ item }}
+        </button>
+      </div>
+    </div>
+
+    <button
+      class="text-sm text-white flex items-center gap-1 hover:underline"
+      @click="uploadDICOM"
+    >
+      <span class="text-xl">+</span> Upload DICOM
+    </button>
+  </div>
 </template>
-  
-<script setup>
-import { onMounted, ref } from 'vue'
-import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-const canvas = ref(null)
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-onMounted(() => {
-    const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    camera.position.z = 10
+const router = useRouter()
+const searchQuery = ref('')
+const popularActivities = [
+  'Mathematics',
+  'Talking',
+  'Sports',
+  'Reading',
+  'Playing Chess'
+]
 
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas.value, antialias: true, alpha: false })
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setPixelRatio(window.devicePixelRatio)
-    renderer.setClearColor(0xffffff) // Hintergrund weiß
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
-    directionalLight.position.set(5, 5, 5)
-    scene.add(ambientLight, directionalLight)
-
-    const axesHelper = new THREE.AxesHelper(5)
-    scene.add(axesHelper)
-
-    const loader = new GLTFLoader()
-    loader.load('/assets/brain_model.gltf', (gltf) => {
-        console.log('Gehirnmodell geladen:', gltf)
-
-        const brain = gltf.scene
-        brain.scale.set(0.04, 0.04, 0.04)
-        brain.position.set(0, 0, 0)
-
-
-        //Gehirnfarbe
-        brain.traverse((child) => {
-            if (child.isMesh) {
-                console.log('Gefundener Mesh:', child.name)
-
-                const baseColor = 0x4477ff
-                const color = child.name.toLowerCase().includes("cortex") ? 0xff4444 : baseColor
-
-                child.material = new THREE.MeshStandardMaterial({
-                    color: color,
-                    roughness: 0.6,
-                    metalness: 0.1,
-                    transparent: true,
-                    opacity: 0.7 // Hier steuerst du die Transparenz (0.0 = komplett durchsichtig, 1.0 = undurchsichtig)
-                })
-            }
-        })
-
-        scene.add(brain)
-    })
-
-    function animate() {
-        requestAnimationFrame(animate)
-        scene.rotation.y += 0.002
-        controls.update() // wichtig für Dämpfung
-        renderer.render(scene, camera)
-    }
-
-    const controls = new OrbitControls(camera, renderer.domElement)
-controls.enableDamping = true // weichere Bewegungen
-controls.dampingFactor = 0.05
-
-    animate()
-})
-</script>
-
-  
-<style>
-/* Canvas nimmt den ganzen Bildschirm */
-canvas {
-    width: 100%;
-    height: 100vh;
-    display: block;
-    background: #FFF;
+const uploadDICOM = () => {
+  alert('Upload DICOM functionality coming soon')
 }
-</style>
-  
+
+const handleEnter = (e: KeyboardEvent) => {
+  if (e.key === 'Enter' && searchQuery.value.trim()) {
+    router.push({ path: '/atlas', query: { q: searchQuery.value } })
+  }
+}
+</script>
