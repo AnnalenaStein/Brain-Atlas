@@ -12,7 +12,7 @@
             id="activityInput"
             v-model="searchQuery"
             type="text"
-            placeholder="e.g. Playing an Instrument or Broca"
+            placeholder="Playing an Instrument"
             @keyup.enter="handleEnter"
             class="w-full px-4 py-2 rounded-md bg-input border border-border text-body focus:outline-none focus:ring-2 focus:ring-base placeholder-muted"
           />
