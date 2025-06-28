@@ -7,6 +7,7 @@
         ← Back
       </button>
       <canvas ref="canvas"></canvas>
+      <ControlPanel />
     </div>
   </template>
   
