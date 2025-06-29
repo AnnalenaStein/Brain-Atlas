@@ -1,280 +1,234 @@
 <template>
-    <div class="control-panel">
-      <!-- Search and Filter -->
-      <div class="section">
-        <h3>🔍 Search and Filter</h3>
-        <label>Edit Activity</label>
-        <input type="text" v-model="activity" placeholder="Handmovement" />
-        <button class="btn">Filter</button>
-      </div>
-  
-      <!-- Play -->
-      <div class="section">
-        <h3>⏯️ Play</h3>
-        <div class="play-controls">
-          <button>⏮️</button>
-          <button>▶️</button>
-          <button>⏭️</button>
-        </div>
-        <input type="range" min="0" max="100" v-model="time" />
-      </div>
-  
-      <!-- Controls -->
-      <div class="section">
-        <h3>⚙️ Controls</h3>
-        <p>Human Model <span class="eye">👁️</span></p>
-        <label>Transparency {{ transparency }}%</label>
-        <input type="range" min="0" max="100" v-model="transparency" />
-        <div class="button-row">
-          <button class="btn">Comparision</button>
-          <button class="btn">Reset view</button>
-        </div>
-      </div>
-  
-      <!-- Brain Structure -->
-      <div class="section">
-        <div class="dropdown-header" @click="toggleBrainStructure">
-          <h3>🧠 Brain Structure</h3>
-          <span class="arrow">{{ showBrainStructure ? '▾' : '▸' }}</span>
-        </div>
-        <div v-if="showBrainStructure" class="brain-structure">
-          <input type="text" placeholder="Search Region or Area" class="search-input" />
-          <ul class="tree">
-            <li>
-              <div class="tree-item" @click="toggle('cerebrum')">
-                <span class="arrow">{{ expanded.cerebrum ? '▾' : '▸' }}</span>
-                <span :class="dot('blue')"></span> Cerebrum
-              </div>
-              <ul v-if="expanded.cerebrum">
-                <li class="indent">
-                  <span class="arrow">▸</span>
-                  <span :class="dot('purple')"></span> Frontal Lobe
-                </li>
-                <li class="indent">
-                  <span class="arrow">▸</span>
-                  <span :class="dot('purple')"></span> Parietal Lobe
-                </li>
-                <li class="indent">
-                  <span class="arrow">▸</span>
-                  <span :class="dot('orange')"></span> Temporal Lobe
-                </li>
-                <li class="indent">
-                  <span class="arrow">▸</span>
-                  <span :class="dot('yellow')"></span> Occipital Lobe
-                </li>
-              </ul>
-            </li>
-            <li>
-              <div class="tree-item">
-                <span class="arrow">▸</span>
-                <span :class="dot('red')"></span> Cerebellum
-              </div>
-            </li>
-            <li>
-              <div class="tree-item">
-                <span class="arrow">▸</span>
-                <span :class="dot('purple')"></span> Brain Stem
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-  
-      <!-- AI -->
-      <div class="section">
-        <h3>🤖 AI</h3>
-        <button class="btn">Detect Patterns</button>
-        <button class="btn">Find Similar Activities</button>
-        <button class="btn">Highlight Anomalies</button>
+  <div class="analytics-wrapper">
+    <button class="back-button" @click="goBack">← Back to Atlas</button>
+
+    <h2 class="page-title">Analytics</h2>
+    <div class="tab-bar-wrapper">
+      <div class="tab-bar">
+        <button class="tab" :class="{ active: activeTab === 'cluster' }">Clusteranalysis</button>
+        <button class="tab" :class="{ active: activeTab === 'comparison' }">Comparison by Regions</button>
+        <button class="tab" :class="{ active: activeTab === 'time' }">Time course</button>
       </div>
     </div>
-  
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue'
-  import { useRouter } from '#app'
-  
-  const router = useRouter()
-  
-  const activity = ref('Handmovement')
-  const time = ref(50)
-  const transparency = ref(70)
-  const showBrainStructure = ref(false)
-  const expanded = ref({ cerebrum: true })
-  
-  function toggleBrainStructure() {
-    showBrainStructure.value = !showBrainStructure.value
-  }
-  
-  function toggle(section) {
-    expanded.value[section] = !expanded.value[section]
-  }
-  
-  function dot(color) {
-    return `dot dot-${color}`
-  }
-  
-  function goToAnalyticsPage() {
-    router.push('/analytics')
-  }
-  </script>
-  
-  <style scoped>
-  .control-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 260px;
-    height: 100vh;
-    background-color: #1a1a1a;
-    color: #d1d5db;
-    padding: 20px 16px;
-    overflow-y: auto;
-    font-family: sans-serif;
-    z-index: 999;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  .section {
-    margin-bottom: 24px;
-  }
-  
-  h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0;
-  }
-  
-  .dropdown-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: 12px;
-  }
-  
-  label {
-    font-size: 13px;
-    color: #9ca3af;
-    display: block;
-    margin-bottom: 4px;
-  }
-  
-  input[type="text"], .search-input {
-    width: 100%;
-    padding: 6px 10px;
-    background-color: #111827;
-    border: 1px solid #4b5563;
-    border-radius: 6px;
-    color: #ffffff;
-    margin-bottom: 8px;
-  }
-  
-  input[type="range"] {
-    width: 100%;
-    margin-top: 6px;
-  }
-  
-  button.btn {
-    background-color: #374151;
-    color: #ffffff;
-    border: none;
-    padding: 6px 12px;
-    margin-top: 6px;
-    margin-right: 6px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-  }
-  
-  button.btn:hover {
-    background-color: #4b5563;
-  }
-  
-  .scroll-fab {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #4b5563;
-    color: #fff;
-    padding: 10px 16px;
-    border-radius: 9999px;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  }
-  
-  .scroll-fab:hover {
-    background-color: #5e6670;
-  }
-  
-  .play-controls button {
-    background: none;
-    border: none;
-    color: #d1d5db;
-    font-size: 16px;
-    margin-right: 8px;
-    cursor: pointer;
-  }
-  
-  .eye {
-    float: right;
-  }
-  
-  .button-row {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-  }
-  
-  .tree {
-    list-style: none;
-    padding-left: 10px;
-  }
-  
-  .tree li {
-    margin: 6px 0;
-    cursor: default;
-  }
-  
-  .tree-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-  }
-  
-  .arrow {
-    margin-left: auto;
-    color: #9ca3af;
-    font-size: 12px;
-  }
-  
-  .indent {
-    padding-left: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 4px;
-    vertical-align: middle;
-  }
-  
-  .dot-blue { background-color: #3b82f6; }
-  .dot-red { background-color: #ef4444; }
-  .dot-yellow { background-color: #facc15; }
-  .dot-purple { background-color: #a855f7; }
-  .dot-orange { background-color: #f97316; }
-  </style>
-  
+
+    <div class="main-layout">
+      <div class="chart-panel">
+        <ECharts :option="chartOptions" class="chart" />
+        <div class="chart-controls">
+          <button class="icon">⏮</button>
+          <button class="icon">▶️</button>
+          <button class="icon">⏭</button>
+          <input type="range" min="0" max="100" class="slider" />
+        </div>
+      </div>
+
+      <AnalyticsPanel />
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from '#app'
+import AnalyticsPanel from '~/components/AnalyticsPanel.vue'
+import ECharts from 'vue-echarts'
+import { use } from 'echarts/core'
+import { ScatterChart } from 'echarts/charts'
+import { TooltipComponent, LegendComponent, TitleComponent, GridComponent } from 'echarts/components'
+import { CanvasRenderer } from 'echarts/renderers'
+
+use([ScatterChart, TooltipComponent, LegendComponent, TitleComponent, GridComponent, CanvasRenderer])
+
+const router = useRouter()
+function goBack() {
+  router.push('/atlas')
+}
+
+const activeTab = ref('cluster')
+
+const labelStyle = {
+  show: true,
+  position: 'right',
+  distance: 2,
+  color: '#9ca3af',
+  fontSize: 12
+}
+
+const chartOptions = {
+  backgroundColor: '#000',
+  title: {
+    text: 'Clusteranalyse – Hirnaktivität bei Handbewegung',
+    left: 'center',
+    textStyle: { color: '#fff' }
+  },
+  tooltip: {
+    trigger: 'item',
+    formatter: function (params) {
+      return `PCA1: ${params.value[0]}<br/>PCA2: ${params.value[1]}`
+    }
+  },
+  legend: {
+    data: ['Cluster 1', 'Cluster 2', 'Cluster 3'],
+    bottom: 10,
+    textStyle: { color: '#fff' }
+  },
+  xAxis: {
+    name: 'PCA 1',
+    nameTextStyle: { color: '#fff' },
+    axisLabel: { color: '#fff' },
+    splitLine: { lineStyle: { color: '#444' } }
+  },
+  yAxis: {
+    name: 'PCA 2',
+    nameTextStyle: { color: '#fff' },
+    axisLabel: { color: '#fff' },
+    splitLine: { lineStyle: { color: '#444' } }
+  },
+  series: [
+    {
+      name: 'Cluster 1',
+      type: 'scatter',
+      data: [
+        { name: 'Insula (Körperwahrnehmung)', value: [-0.7, 0.25], label: { ...labelStyle } },
+        { name: 'Okzipital (visuell)', value: [-0.4, -0.3], label: { ...labelStyle } },
+        { name: 'Kleinhirn', value: [-0.1, -0.02], label: { ...labelStyle } }
+      ],
+      symbolSize: 16,
+      itemStyle: { color: '#facc15' }
+    },
+    {
+      name: 'Cluster 2',
+      type: 'scatter',
+      data: [
+        { name: 'M1 (primär motorisch)', value: [0.6, -0.2], label: { ...labelStyle } },
+        { name: 'S1 (somatosensorisch)', value: [0.9, 0.1], label: { ...labelStyle } }
+      ],
+      symbolSize: 16,
+      itemStyle: { color: '#fb7185' }
+    },
+    {
+      name: 'Cluster 3',
+      type: 'scatter',
+      data: [
+        { name: 'PMC (prämotorisch)', value: [0.1, 0.6], label: { ...labelStyle } },
+        { name: 'SMA (supplementär-motorisch)', value: [0.2, 0.15], label: { ...labelStyle } },
+        { name: 'PPC (parietal)', value: [-0.2, -0.05], label: { ...labelStyle } },
+        { name: 'Präfrontal (Planung)', value: [0.0, -0.35], label: { ...labelStyle } },
+        { name: 'Basalganglien', value: [0.0, -0.2], label: { ...labelStyle } }
+      ],
+      symbolSize: 16,
+      itemStyle: { color: '#38bdf8' }
+    }
+  ]
+}
+</script>
+
+<style scoped>
+.analytics-wrapper {
+  background: #000;
+  color: white;
+  padding: 40px;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+.back-button {
+  position: relative;
+  margin-bottom: 20px;
+  background-color: #374151;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #4b5563;
+}
+
+.page-title {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.tab-bar-wrapper {
+  display: inline-block;
+  padding: 4px;
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 999px;
+  margin-bottom: 32px;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 2px;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tab.active {
+  background: white;
+  color: black;
+}
+
+.main-layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.chart-panel {
+  background: #1a1a1a;
+  padding: 16px;
+  border-radius: 8px;
+  flex: 1;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chart {
+  width: 100%;
+  height: 480px;
+  margin-bottom: 24px;
+}
+
+.chart-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #fff;
+  background-color: #1f2937;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.slider {
+  flex: 1;
+  appearance: none;
+  height: 4px;
+  background: #9ca3af;
+  border-radius: 2px;
+  outline: none;
+  transition: background 0.2s ease;
+}
+</style>
