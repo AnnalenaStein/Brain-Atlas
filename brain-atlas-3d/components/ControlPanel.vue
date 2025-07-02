@@ -95,6 +95,12 @@
       </div>
     </div>
   </div>
+
+  <NuxtLink to="/analytics" class="analytics-button-link">
+  <button class="small-button">📈 Analytics</button>
+</NuxtLink>
+
+
 </template>
 
 <script setup>
@@ -285,5 +291,13 @@
 hr {
   border: 0.1px solid #6a6a6a;
   margin: 16px 0;
+}
+
+.analytics-button-link {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 </style>
