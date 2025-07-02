@@ -46,7 +46,7 @@
 
     <div class="section">
       <h3 class="section-title">Brain Structure</h3>
-      <ul class="tree">
+      <!-- <ul class="tree">
         <li>
           <span class="tree-toggle">▾</span> Cerebrum
           <ul>
@@ -56,7 +56,43 @@
             <li>Occipital Lobe</li>
           </ul>
         </li>
-      </ul>
+      </ul> -->
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <h3 class="section-title">🧠 AI Insight Discovery Assistant</h3>
+    <div class="button-row">
+      <button class="small-button">Detect Patterns</button>
+      <button class="small-button">Find Similar Activities</button>
+      <button class="small-button">Highlight Anomalies</button>
+    </div>
+    <hr />
+    <p class="small-text">Ask AI</p>
+    <input type="text" class="input" placeholder="Why is there activation in..." />
+  </div>
+
+  <div class="header-bar">
+    <h2 class="title">Moving the Hand</h2>
+    <select class="dropdown">
+      <option>Average Brain</option>
+    </select>
+  </div>
+
+  <div class="header-bar">
+    <h2 class="title">Moving the Hand</h2>
+    <select class="dropdown">
+      <option>Average Brain</option>
+    </select>
+  </div>
+
+  <div class="mode-switch">
+    <div class="tab-bar-wrapper">
+      <div class="tab-bar">
+        <button class="tab active">🧠 3D Model</button>
+        <button class="tab">📊 Slices</button>
+        <button class="tab">🗺️ Flatmap</button>
+      </div>
     </div>
   </div>
 </template>
@@ -70,12 +106,88 @@
   position: absolute;
   right: 16px;
   top: 96px;
-  width: 20vw;
+  width: 18vw;
   padding: 16px;
   border-radius: 8px;
   background: rgba(81, 81, 81, 0.4);
   color: #fff;
   font-family: Inter, sans-serif;
+}
+
+.insight-box {
+  position: absolute;
+  left: 16px;
+  bottom: 32px;
+  width: 316px;
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(81, 81, 81, 0.4);
+  color: #fff;
+}
+
+.header-bar {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+
+.header-bar .title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.dropdown {
+  height: 28px;
+  font-size: 14px;
+  padding: 2px 20px 2px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #1a1a1a;
+  color: white;
+  margin-left: 12px;
+}
+
+.mode-switch {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.tab-bar-wrapper {
+  padding: 4px;
+  border: 1px solid white;
+  border-radius: 999px;
+  margin-bottom: 32px;
+  display: inline-block;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 2px;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tab.active {
+  background: #434343;
+}
+
+.mode-button {
+  display: none;
 }
 
 .section {
@@ -86,19 +198,21 @@
 }
 
 .section-title {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 520;
   margin-bottom: 4px;
 }
 
 .label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
+  color: #dedede;
 }
 
 .small-text {
   font-size: 13px;
   font-weight: 300;
+  color: #c9c9c9;
 }
 
 .input {
@@ -109,6 +223,7 @@
   background: transparent;
   color: #fff;
   font-size: 14px;
+  width: 100%;
 }
 
 .button-row,
@@ -120,10 +235,10 @@
 
 .small-button {
   padding: 4px 8px;
-  background: #454545;
+  background: #434343;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 13px;
   font-weight: 400;
   color: #fff;
   cursor: pointer;
@@ -144,6 +259,7 @@
 
 .slider {
   width: 100%;
+  height: 4px;
 }
 
 .row {
@@ -167,7 +283,7 @@
 }
 
 hr {
-  border: 0.5px solid #969696;
+  border: 0.1px solid #6a6a6a;
   margin: 16px 0;
 }
 </style>
