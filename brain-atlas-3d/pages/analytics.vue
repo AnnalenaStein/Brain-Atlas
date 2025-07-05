@@ -3,11 +3,12 @@
     <button class="back-button" @click="goBack">← Back to Atlas</button>
 
     <h2 class="page-title">Analytics</h2>
+
     <div class="tab-bar-wrapper">
       <div class="tab-bar">
-        <button class="tab" :class="{ active: activeTab === 'cluster' }">Clusteranalysis</button>
-        <button class="tab" :class="{ active: activeTab === 'comparison' }">Comparison by Regions</button>
-        <button class="tab" :class="{ active: activeTab === 'time' }">Time course</button>
+        <button class="tab" :class="{ active: activeTab === 'cluster' }" @click="activeTab = 'cluster'">Clusteranalysis</button>
+        <button class="tab" :class="{ active: activeTab === 'comparison' }" @click="activeTab = 'comparison'">Comparison by Regions</button>
+        <button class="tab" :class="{ active: activeTab === 'time' }" @click="activeTab = 'time'">Time course</button>
       </div>
     </div>
 
@@ -30,21 +31,22 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from '#app'
-import AnalyticsPanel from '~/components/AnalyticsPanel.vue'
 import ECharts from 'vue-echarts'
+import AnalyticsPanel from '~/components/AnalyticsPanel.vue'
+
 import { use } from 'echarts/core'
 import { ScatterChart } from 'echarts/charts'
-import { TooltipComponent, LegendComponent, TitleComponent, GridComponent, LabelLayout } from 'echarts/components'
+import { TooltipComponent, LegendComponent, TitleComponent, GridComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 
-use([ScatterChart, TooltipComponent, LegendComponent, TitleComponent, GridComponent, CanvasRenderer, LabelLayout])
+use([ScatterChart, TooltipComponent, LegendComponent, TitleComponent, GridComponent, CanvasRenderer])
 
 const router = useRouter()
+const activeTab = ref('cluster')
+
 function goBack() {
   router.push('/atlas')
 }
-
-const activeTab = ref('cluster')
 
 const labelStyle = {
   show: true,
@@ -63,9 +65,7 @@ const chartOptions = {
   },
   tooltip: {
     trigger: 'item',
-    formatter: function (params) {
-      return `PCA1: ${params.value[0]}<br/>PCA2: ${params.value[1]}`
-    }
+    formatter: (params) => `PCA1: ${params.value[0]}<br/>PCA2: ${params.value[1]}`
   },
   legend: {
     data: ['Cluster 1', 'Cluster 2', 'Cluster 3'],
@@ -153,12 +153,11 @@ const chartOptions = {
 }
 
 .tab-bar-wrapper {
-  display: inline-block;
   padding: 4px;
-  background: transparent;
   border: 1px solid white;
   border-radius: 999px;
   margin-bottom: 32px;
+  display: inline-block;
 }
 
 .tab-bar {
