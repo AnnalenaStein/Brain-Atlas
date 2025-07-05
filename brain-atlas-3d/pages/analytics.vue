@@ -29,18 +29,23 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from '#app'
 import ECharts from 'vue-echarts'
 import AnalyticsPanel from '~/components/AnalyticsPanel.vue'
 import InsightPanel from '~/components/InsightPanel.vue'
 
 import { use } from 'echarts/core'
-import { ScatterChart } from 'echarts/charts'
-import { TooltipComponent, LegendComponent, TitleComponent, GridComponent } from 'echarts/components'
+import { ScatterChart, LineChart } from 'echarts/charts'
+import {
+  TooltipComponent,
+  LegendComponent,
+  TitleComponent,
+  GridComponent
+} from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 
-use([ScatterChart, TooltipComponent, LegendComponent, TitleComponent, GridComponent, CanvasRenderer])
+use([ScatterChart, LineChart, TooltipComponent, LegendComponent, TitleComponent, GridComponent, CanvasRenderer])
 
 const router = useRouter()
 const activeTab = ref('cluster')
@@ -49,7 +54,6 @@ function goBack() {
   router.push('/atlas')
 }
 
-// Label style – dauerhaft sichtbar
 const labelStyle = {
   show: true,
   formatter: (params) => params.name,
@@ -59,7 +63,7 @@ const labelStyle = {
   fontSize: 12
 }
 
-const chartOptions = {
+const clusterChartOptions = {
   backgroundColor: '#000',
   tooltip: {
     trigger: 'item',
@@ -126,7 +130,75 @@ const chartOptions = {
   ]
 }
 
+const timeChartOptions = {
+  backgroundColor: '#000',
+  title: {
+    text: 'Simulierter Zeitverlauf – Hirnaktivität bei Handbewegung (1–2s)',
+    left: 'center',
+    textStyle: { color: '#fff' }
+  },
+  tooltip: {
+    trigger: 'axis'
+  },
+  legend: {
+    data: ['M1 (Motorisch)', 'PMC (Prämotorisch)', 'SMA (Supplementär)', 'S1 (Somatosensorisch)', 'Kleinhirn'],
+    textStyle: { color: '#fff' },
+    top: 30
+  },
+  xAxis: {
+    type: 'category',
+    name: 'Zeit (s)',
+    nameTextStyle: { color: '#fff' },
+    axisLabel: { color: '#fff' },
+    boundaryGap: false,
+    data: Array.from({ length: 20 }, (_, i) => (1 + i * 0.05).toFixed(2)) // 1s–2s in 0.05s-Schritten
+  },
+  yAxis: {
+    type: 'value',
+    name: 'BOLD-Signal (simuliert)',
+    nameTextStyle: { color: '#fff' },
+    axisLabel: { color: '#fff' }
+  },
+  series: [
+    {
+      name: 'M1 (Motorisch)',
+      type: 'line',
+      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
+      smooth: true
+    },
+    {
+      name: 'PMC (Prämotorisch)',
+      type: 'line',
+      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
+      smooth: true
+    },
+    {
+      name: 'SMA (Supplementär)',
+      type: 'line',
+      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
+      smooth: true
+    },
+    {
+      name: 'S1 (Somatosensorisch)',
+      type: 'line',
+      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
+      smooth: true
+    },
+    {
+      name: 'Kleinhirn',
+      type: 'line',
+      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
+      smooth: true
+    }
+  ]
+}
+
+
+const chartOptions = computed(() =>
+  activeTab.value === 'time' ? timeChartOptions : clusterChartOptions
+)
 </script>
+
 
 <style scoped>
 .analytics-wrapper {
