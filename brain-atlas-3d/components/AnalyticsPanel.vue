@@ -1,232 +1,172 @@
 <template>
-  <div class="analytics-wrapper">
-    <button class="back-button" @click="goBack">← Back to Atlas</button>
+  <div class="analytics-panel">
+    <div class="left-section">
+      <h3 class="section-title">Search and Filter</h3>
+      <p class="label">Edit Activity</p>
+      <input type="text" placeholder="Handmovement" class="input" />
+      <div class="button-row">
+        <button class="small-button">Filter</button>
+        <button class="small-button">Comparison</button>
+      </div>
 
-    <h2 class="page-title">Analytics</h2>
-    <div class="tab-bar-wrapper">
-      <div class="tab-bar">
-        <button class="tab" :class="{ active: activeTab === 'cluster' }">Clusteranalysis</button>
-        <button class="tab" :class="{ active: activeTab === 'comparison' }">Comparison by Regions</button>
-        <button class="tab" :class="{ active: activeTab === 'time' }">Time course</button>
+      <hr />
+
+      <h3 class="section-title">Time Window</h3>
+      <input type="range" class="slider" />
+      <div class="row">
+        <span class="label">Start</span>
+        <span class="label">End</span>
+      </div>
+
+      <h3 class="section-title">Threshold</h3>
+      <input type="range" class="slider" />
+      <div class="row">
+        <span class="label">0%</span>
+        <span class="label">100%</span>
+      </div>
+
+      <h3 class="section-title">Cluster Settings</h3>
+      <div class="row">
+        <span class="label"># of Clusters</span>
+        <input type="number" class="number-input" min="1" max="10" value="3" />
+      </div>
+      <div class="row">
+        <span class="label">Method</span>
+        <select class="dropdown">
+          <option>KMeans</option>
+          <option>DBSCAN</option>
+          <option>Hierarchical</option>
+        </select>
+      </div>
+
+      <div class="button-row">
+        <button class="small-button">Reset</button>
+        <button class="small-button">Export</button>
       </div>
     </div>
 
-    <div class="main-layout">
-      <div class="chart-panel">
-        <ECharts :option="chartOptions" class="chart" />
-        <div class="chart-controls">
-          <button class="icon">⏮</button>
-          <button class="icon">▶️</button>
-          <button class="icon">⏭</button>
-          <input type="range" min="0" max="100" class="slider" />
-        </div>
+    <div class="insight-box">
+      <h3 class="section-title">🧠 AI Insight Discovery Assistant</h3>
+      <div class="button-row">
+        <button class="small-button">Detect Patterns</button>
+        <button class="small-button">Find Similar Activities</button>
+        <button class="small-button">Highlight Anomalies</button>
       </div>
-
+      <hr />
+      <p class="label">Ask AI</p>
+      <input type="text" class="input" placeholder="Why is there activation in..." />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from '#app'
-import ECharts from 'vue-echarts'
-import { use } from 'echarts/core'
-import { ScatterChart } from 'echarts/charts'
-import { TooltipComponent, LegendComponent, TitleComponent, GridComponent } from 'echarts/components'
-import { CanvasRenderer } from 'echarts/renderers'
-
-use([ScatterChart, TooltipComponent, LegendComponent, TitleComponent, GridComponent, CanvasRenderer])
-
-const router = useRouter()
-function goBack() {
-  router.push('/atlas')
-}
-
-const activeTab = ref('cluster')
-
-const labelStyle = {
-  show: true,
-  position: 'right',
-  distance: 2,
-  color: '#9ca3af',
-  fontSize: 12
-}
-
-const chartOptions = {
-  backgroundColor: '#000',
-  title: {
-    text: 'Clusteranalyse – Hirnaktivität bei Handbewegung',
-    left: 'center',
-    textStyle: { color: '#fff' }
-  },
-  tooltip: {
-    trigger: 'item',
-    formatter: function (params) {
-      return `PCA1: ${params.value[0]}<br/>PCA2: ${params.value[1]}`
-    }
-  },
-  legend: {
-    data: ['Cluster 1', 'Cluster 2', 'Cluster 3'],
-    bottom: 10,
-    textStyle: { color: '#fff' }
-  },
-  xAxis: {
-    name: 'PCA 1',
-    nameTextStyle: { color: '#fff' },
-    axisLabel: { color: '#fff' },
-    splitLine: { lineStyle: { color: '#444' } }
-  },
-  yAxis: {
-    name: 'PCA 2',
-    nameTextStyle: { color: '#fff' },
-    axisLabel: { color: '#fff' },
-    splitLine: { lineStyle: { color: '#444' } }
-  },
-  series: [
-    {
-      name: 'Cluster 1',
-      type: 'scatter',
-      data: [
-        { name: 'Insula (Körperwahrnehmung)', value: [-0.7, 0.25], label: { ...labelStyle } },
-        { name: 'Okzipital (visuell)', value: [-0.4, -0.3], label: { ...labelStyle } },
-        { name: 'Kleinhirn', value: [-0.1, -0.02], label: { ...labelStyle } }
-      ],
-      symbolSize: 16,
-      itemStyle: { color: '#facc15' }
-    },
-    {
-      name: 'Cluster 2',
-      type: 'scatter',
-      data: [
-        { name: 'M1 (primär motorisch)', value: [0.6, -0.2], label: { ...labelStyle } },
-        { name: 'S1 (somatosensorisch)', value: [0.9, 0.1], label: { ...labelStyle } }
-      ],
-      symbolSize: 16,
-      itemStyle: { color: '#fb7185' }
-    },
-    {
-      name: 'Cluster 3',
-      type: 'scatter',
-      data: [
-        { name: 'PMC (prämotorisch)', value: [0.1, 0.6], label: { ...labelStyle } },
-        { name: 'SMA (supplementär-motorisch)', value: [0.2, 0.15], label: { ...labelStyle } },
-        { name: 'PPC (parietal)', value: [-0.2, -0.05], label: { ...labelStyle } },
-        { name: 'Präfrontal (Planung)', value: [0.0, -0.35], label: { ...labelStyle } },
-        { name: 'Basalganglien', value: [0.0, -0.2], label: { ...labelStyle } }
-      ],
-      symbolSize: 16,
-      itemStyle: { color: '#38bdf8' }
-    }
-  ]
-}
+// Logic will be added later as needed
 </script>
 
 <style scoped>
-.analytics-wrapper {
-  background: #000;
-  color: white;
-  padding: 40px;
-  min-height: 100vh;
-  font-family: sans-serif;
+.analytics-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
 }
 
-.back-button {
-  position: relative;
-  margin-bottom: 20px;
-  background-color: #374151;
-  color: white;
-  border: none;
-  padding: 6px 12px;
+.left-section {
+  width: 260px;
+  padding: 16px;
   border-radius: 8px;
-  cursor: pointer;
+  background: rgba(81, 81, 81, 0.4);
+  color: #fff;
+  font-family: Inter, sans-serif;
 }
 
-.back-button:hover {
-  background-color: #4b5563;
+.insight-box {
+  width: 260px;
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(81, 81, 81, 0.4);
+  color: #fff;
 }
 
-.page-title {
-  font-size: 24px;
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.dropdown {
+  height: 32px;
+  font-size: 14px;
+  padding: 2px 20px 2px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #1a1a1a;
+  color: white;
+  width: 100%;
   margin-bottom: 16px;
 }
 
-.tab-bar-wrapper {
-  display: inline-block;
-  padding: 4px;
-  background: transparent;
-  border: 1px solid white;
-  border-radius: 999px;
-  margin-bottom: 32px;
+.slider {
+  width: 100%;
+  height: 4px;
+  margin-bottom: 8px;
 }
 
-.tab-bar {
+.row {
   display: flex;
-  gap: 2px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
-.tab {
-  background: transparent;
+.button-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.small-button {
+  padding: 4px 8px;
+  background: #434343;
   border: none;
-  color: white;
-  padding: 6px 16px;
-  border-radius: 999px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #fff;
   cursor: pointer;
+}
+
+.input {
+  height: 32px;
+  border: 1px solid #c9c9c9;
+  border-radius: 8px;
+  padding-left: 8px;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  width: 100%;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #dedede;
+  margin-bottom: 4px;
+}
+
+.number-input {
+  width: 60px;
+  background: #1a1a1a;
+  border: 1px solid #ccc;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2px 6px;
   font-size: 14px;
 }
 
-.tab.active {
-  background: white;
-  color: black;
-}
-
-.main-layout {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 40px;
-}
-
-.chart-panel {
-  background: #1a1a1a;
-  padding: 16px;
-  border-radius: 8px;
-  flex: 1;
-  max-width: 720px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.chart {
-  width: 100%;
-  height: 480px;
-  margin-bottom: 24px;
-}
-
-.chart-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.icon {
-  background: none;
-  border: none;
-  font-size: 18px;
-  color: #fff;
-  background-color: #1f2937;
-  border-radius: 6px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
-.slider {
-  flex: 1;
-  appearance: none;
-  height: 4px;
-  background: #9ca3af;
-  border-radius: 2px;
-  outline: none;
-  transition: background 0.2s ease;
+hr {
+  border: 0.5px solid #6a6a6a;
+  margin: 16px 0;
 }
 </style>

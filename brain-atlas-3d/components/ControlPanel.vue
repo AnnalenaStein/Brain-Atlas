@@ -110,7 +110,7 @@
 <style scoped>
 .control-panel {
   position: absolute;
-  right: 16px;
+  left: 16px;
   top: 96px;
   width: 18vw;
   padding: 16px;
@@ -122,7 +122,7 @@
 
 .insight-box {
   position: absolute;
-  left: 16px;
+  right: 16px;
   bottom: 32px;
   width: 316px;
   padding: 16px;
@@ -166,7 +166,7 @@
 }
 
 .tab-bar-wrapper {
-  padding: 4px;
+  padding: 2px;
   border: 1px solid white;
   border-radius: 999px;
   margin-bottom: 32px;
