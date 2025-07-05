@@ -60,17 +60,7 @@
     </div>
   </div>
 
-  <div class="insight-box">
-    <h3 class="section-title">🧠 AI Insight Discovery Assistant</h3>
-    <div class="button-row">
-      <button class="small-button">Detect Patterns</button>
-      <button class="small-button">Find Similar Activities</button>
-      <button class="small-button">Highlight Anomalies</button>
-    </div>
-    <hr />
-    <p class="small-text">Ask AI</p>
-    <input type="text" class="input" placeholder="Why is there activation in..." />
-  </div>
+  <InsightPanel />
 
   <div class="header-bar">
     <h2 class="title">Moving the Hand</h2>
@@ -118,17 +108,6 @@
   background: rgba(81, 81, 81, 0.4);
   color: #fff;
   font-family: Inter, sans-serif;
-}
-
-.insight-box {
-  position: absolute;
-  right: 16px;
-  bottom: 32px;
-  width: 316px;
-  padding: 16px;
-  border-radius: 8px;
-  background: rgba(81, 81, 81, 0.4);
-  color: #fff;
 }
 
 .header-bar {

@@ -1,37 +1,21 @@
 <template>
   <div class="analytics-panel">
-    <div class="left-section">
-      <h3 class="section-title">Search and Filter</h3>
-      <p class="label">Edit Activity</p>
-      <input type="text" placeholder="Handmovement" class="input" />
-      <div class="button-row">
-        <button class="small-button">Filter</button>
-        <button class="small-button">Comparison</button>
+    <div class="section">
+      <!-- 🔗 Regionselection -->
+      <div class="section-header">
+        <span class="section-title">🔗 Regionselection</span>
+        <span class="chevron">⌄</span>
       </div>
+    </div>
 
-      <hr />
+    <hr />
 
-      <h3 class="section-title">Time Window</h3>
-      <input type="range" class="slider" />
-      <div class="row">
-        <span class="label">Start</span>
-        <span class="label">End</span>
-      </div>
+    <!-- ⚙️ Cluster Settings -->
+    <div class="section">
+      <h3 class="section-title">⚙️ Cluster Settings</h3>
 
-      <h3 class="section-title">Threshold</h3>
-      <input type="range" class="slider" />
-      <div class="row">
-        <span class="label">0%</span>
-        <span class="label">100%</span>
-      </div>
-
-      <h3 class="section-title">Cluster Settings</h3>
-      <div class="row">
-        <span class="label"># of Clusters</span>
-        <input type="number" class="number-input" min="1" max="10" value="3" />
-      </div>
-      <div class="row">
-        <span class="label">Method</span>
+      <div class="form-group">
+        <label class="label">Clustering Method</label>
         <select class="dropdown">
           <option>KMeans</option>
           <option>DBSCAN</option>
@@ -39,134 +23,255 @@
         </select>
       </div>
 
-      <div class="button-row">
-        <button class="small-button">Reset</button>
-        <button class="small-button">Export</button>
+      <div class="form-group row">
+        <label class="label-inline">Number of Clusters</label>
+        <input type="number" class="number-input" v-model="clusterCount" min="2" max="10" />
+      </div>
+
+      <div class="button-row top-margin">
+        <button class="small-button">Comparison</button>
       </div>
     </div>
 
-    <div class="insight-box">
-      <h3 class="section-title">🧠 AI Insight Discovery Assistant</h3>
+    <hr />
+
+    <!-- 🔍 Play -->
+    <div class="section">
+      <h3 class="section-title">🔍 Play</h3>
+
       <div class="button-row">
-        <button class="small-button">Detect Patterns</button>
-        <button class="small-button">Find Similar Activities</button>
-        <button class="small-button">Highlight Anomalies</button>
+        <button class="icon-button">⏮</button>
+        <button class="icon-button">▶️</button>
+        <button class="icon-button">⏭</button>
       </div>
-      <hr />
-      <p class="label">Ask AI</p>
-      <input type="text" class="input" placeholder="Why is there activation in..." />
+
+      <input type="range" class="slider" min="0" max="100" />
+    </div>
+
+<hr />
+
+    <!-- 🧪 Threshold Filter -->
+    <div class="section">
+      <h3 class="section-title">🧪 Threshold Filter</h3>
+
+      <div class="row">
+        <label class="label">Activation &lt;</label>
+        <input type="number" class="number-input" step="0.1" min="0" max="1" v-model="activationThreshold" />
+      </div>
+
+      <input type="range" class="slider" min="0" max="1" step="0.01" v-model="activationThreshold" />
+
+      <label class="label">Time Range</label>
+      <div class="range-container">
+        <div class="slider-track">
+          <div class="slider-range" :style="{ left: percentStart + '%', width: rangeWidth + '%' }" />
+        </div>
+        <input type="range" :min="min" :max="max" v-model="start" class="thumb thumb-left" />
+        <input type="range" :min="min" :max="max" v-model="end" class="thumb thumb-right" />
+      </div>
+
+      <div class="row">
+        <span class="time-label">{{ formatTime(start) }}</span>
+        <span class="time-label">{{ formatTime(end) }}</span>
+      </div>
+    </div>
+
+<hr />
+
+    <!-- 📤 Export -->
+    <div class="section">
+      <div class="button-row">
+        <button class="export-button">📤 Export</button>
+      </div>
     </div>
   </div>
 </template>
-
 <script setup>
-// Logic will be added later as needed
-</script>
+import { ref, computed, watch } from 'vue'
 
+const clusterCount = ref(5)
+const activationThreshold = ref(0.5)
+
+const min = 0
+const max = 60
+const start = ref(5)
+const end = ref(20)
+
+const percentStart = computed(() => (start.value / max) * 100)
+const percentEnd = computed(() => (end.value / max) * 100)
+const rangeWidth = computed(() => percentEnd.value - percentStart.value)
+
+watch([start, end], () => {
+  if (start.value > end.value) {
+    const temp = start.value
+    start.value = end.value
+    end.value = temp
+  }
+})
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60)
+  const s = seconds % 60
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+}
+</script>
 <style scoped>
 .analytics-panel {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  width: 100%;
-}
-
-.left-section {
   width: 260px;
   padding: 16px;
-  border-radius: 8px;
   background: rgba(81, 81, 81, 0.4);
   color: #fff;
   font-family: Inter, sans-serif;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
-.insight-box {
-  width: 260px;
-  padding: 16px;
-  border-radius: 8px;
-  background: rgba(81, 81, 81, 0.4);
-  color: #fff;
+.section {
+  margin-bottom: 24px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .section-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin: 8px;
+}
+
+.chevron {
+  color: #ccc;
+  font-size: 14px;
+}
+
+.label, .label-inline {
+  color: #dedede;
+  font-size: 14px;
+}
+
+hr {
+  border: 0.1px solid #6a6a6a;
+  margin: 0px 0px 8px 0px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.dropdown,
+.number-input {
+  background: #1a1a1a;
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 4px 8px;
 }
 
 .dropdown {
-  height: 32px;
-  font-size: 14px;
-  padding: 2px 20px 2px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #1a1a1a;
-  color: white;
   width: 100%;
-  margin-bottom: 16px;
+  height: 32px;
+}
+
+.number-input {
+  width: 60px;
 }
 
 .slider {
   width: 100%;
   height: 4px;
-  margin-bottom: 8px;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
+  margin: 8px 0 12px;
 }
 
 .button-row {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 16px;
 }
 
-.small-button {
-  padding: 4px 8px;
-  background: #434343;
+.icon-button,
+.small-button,
+.export-button {
+  padding: 6px 12px;
+  background: #2e2e2e;
+  color: white;
   border: none;
   border-radius: 8px;
-  font-size: 13px;
-  font-weight: 400;
-  color: #fff;
+  font-size: 14px;
   cursor: pointer;
 }
 
-.input {
-  height: 32px;
-  border: 1px solid #c9c9c9;
-  border-radius: 8px;
-  padding-left: 8px;
-  background: transparent;
-  color: #fff;
-  font-size: 14px;
+.export-button {
+  background: #3b3b3b;
+}
+
+.range-container {
+  position: relative;
+  height: 36px;
+  margin: 12px 0;
+}
+
+.slider-track {
+  position: absolute;
+  top: 16px;
+  height: 4px;
+  background-color: #444;
   width: 100%;
+  border-radius: 2px;
 }
 
-.label {
-  font-size: 14px;
-  font-weight: 400;
-  color: #dedede;
-  margin-bottom: 4px;
+.slider-range {
+  position: absolute;
+  height: 100%;
+  background-color: #3b82f6;
+  border-radius: 2px;
 }
 
-.number-input {
-  width: 60px;
-  background: #1a1a1a;
-  border: 1px solid #ccc;
-  color: #fff;
-  border-radius: 6px;
-  padding: 2px 6px;
-  font-size: 14px;
+input[type='range'].thumb {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 36px;
+  background: none;
+  pointer-events: none;
+  appearance: none;
+  z-index: 2;
 }
 
-hr {
-  border: 0.5px solid #6a6a6a;
-  margin: 16px 0;
+input[type='range'].thumb::-webkit-slider-thumb,
+input[type='range'].thumb::-moz-range-thumb {
+  pointer-events: all;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #3b82f6;
+  position: relative;
+  z-index: 3;
+}
+
+.time-label {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.top-margin {
+  margin-top: 16px;
 }
 </style>
