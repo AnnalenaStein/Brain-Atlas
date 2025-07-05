@@ -15,6 +15,7 @@
             <button class="tab" :class="{ active: activeTab === 'cluster' }" @click="activeTab = 'cluster'">Clusteranalysis</button>
             <button class="tab" :class="{ active: activeTab === 'comparison' }" @click="activeTab = 'comparison'">Comparison by Regions</button>
             <button class="tab" :class="{ active: activeTab === 'time' }" @click="activeTab = 'time'">Time course</button>
+            <button class="add-tab-button" @click="addCustomChart">＋</button>
           </div>
         </div>
 
@@ -53,6 +54,11 @@ const activeTab = ref('cluster')
 function goBack() {
   router.push('/atlas')
 }
+
+function addCustomChart() {
+  alert('Custom chart hinzufügen – Funktion folgt.')
+}
+
 
 const labelStyle = {
   show: true,
@@ -193,10 +199,54 @@ const timeChartOptions = {
   ]
 }
 
+const barChartOptions = {
+  backgroundColor: '#000',
+  title: {
+    text: 'Aktivierungsvergleich nach Region (letzter Zeitpunkt)',
+    left: 'center',
+    textStyle: { color: '#fff' }
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: { type: 'shadow' }
+  },
+  legend: { show: false },
+  xAxis: {
+    type: 'category',
+    name: 'Region',
+    data: ['M1 (Motorisch)', 'PMC (Prämotorisch)', 'SMA (Supplementär)', 'S1 (Somatosensorisch)', 'Kleinhirn'],
+    axisLabel: {
+      color: '#fff',
+      rotate: 30
+    }
+  },
+  yAxis: {
+    type: 'value',
+    name: 'BOLD-Signalstärke (simuliert)',
+    axisLabel: { color: '#fff' }
+  },
+  series: [
+    {
+      type: 'bar',
+      data: [
+        { value: -0.55, itemStyle: { color: '#d97706' } }, // Motorik
+        { value: -1.0, itemStyle: { color: '#d97706' } },   // Motorik
+        { value: -0.9, itemStyle: { color: '#d97706' } },   // Motorik
+        { value: -0.85, itemStyle: { color: '#f97316' } },  // Sensorik
+        { value: -0.65, itemStyle: { color: '#e11d48' } }   // Koordination
+      ]
+    }
+  ]
+}
 
-const chartOptions = computed(() =>
-  activeTab.value === 'time' ? timeChartOptions : clusterChartOptions
-)
+
+
+const chartOptions = computed(() => {
+  if (activeTab.value === 'time') return timeChartOptions
+  if (activeTab.value === 'comparison') return barChartOptions
+  return clusterChartOptions
+})
+
 </script>
 
 
@@ -218,6 +268,7 @@ const chartOptions = computed(() =>
   border-radius: 8px;
   cursor: pointer;
 }
+
 .back-button:hover {
   background-color: #4b5563;
 }
