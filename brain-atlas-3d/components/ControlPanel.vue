@@ -7,6 +7,7 @@
       <div class="button-row">
         <button class="small-button">Filter</button>
         <button class="small-button">Comparison</button>
+        
       </div>
     </div>
 
@@ -16,7 +17,7 @@
       <h3 class="section-title">Play</h3>
       <div class="media-buttons">
         <button class="icon-button">⏮️</button>
-        <button class="icon-button">▶️</button>
+        <button class="icon-button" @click="emit('play-clicked')">▶️</button>
         <button class="icon-button">⏭️</button>
       </div>
       <input type="range" class="slider" />
@@ -94,6 +95,7 @@
 </template>
 
 <script setup>
+const emit = defineEmits(['play-clicked'])
 // All logic stays unchanged for now
 </script>
 
