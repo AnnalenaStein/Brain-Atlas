@@ -4,9 +4,9 @@
 
 /* Farb- und Textsystem – basierend auf Analytics Panel */
 :root {
-  --bg-app: #101010;
-  --bg-input: #1a1a1a;
-  --bg-dropdown: rgba(81, 81, 81, 0.4);
+  --bg-app: #0a0a0a;
+  --bg-input: rgba(81, 81, 81, 0.6);
+  --bg-dropdown: rgba(67, 67, 67, 0.4);
   --bg-tag: #434343;
   --bg-tag-hover: #5c5c5c;
 
@@ -63,7 +63,7 @@
 .text-subheading {
   font-size: 1.5rem;
   line-height: 2rem;
-  font-weight: 500;
+  font-weight: 300;
   color: var(--text-subheading);
 }
 

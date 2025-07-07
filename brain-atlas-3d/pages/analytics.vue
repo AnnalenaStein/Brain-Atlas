@@ -321,21 +321,14 @@ const chartOptions = computed(() => {
 })
 </script>
 
-
 <style scoped>
 .analytics-wrapper {
-  background: #000;
-  color: white;
-  padding: 0px;
+  background: var(--bg-app);
+  color: var(--text-body);
+  padding: 0;
   min-height: 100vh;
-  font-family: sans-serif;
+  font-family: Inter, sans-serif;
 }
-
-/* .page-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 12px;
-} */
 
 .main-layout {
   display: flex;
@@ -343,7 +336,6 @@ const chartOptions = computed(() => {
   gap: 0px;
   width: 100%;
   padding-top: 64px;
-
 }
 
 .left-panel {
@@ -369,7 +361,7 @@ const chartOptions = computed(() => {
   margin-bottom: 16px;
   margin-left: 32px;
   padding: 2px;
-  border: 1px solid rgb(151, 151, 151);
+  border: 1px solid var(--border-default);
   border-radius: 999px;
   align-self: flex-start;
 }
@@ -382,20 +374,26 @@ const chartOptions = computed(() => {
 .tab {
   background: transparent;
   border: none;
-  color: white;
+  color: var(--text-heading);
   padding: 8px 12px;
   border-radius: 999px;
   cursor: pointer;
   font-size: 14px;
   line-height: 1.2;
+  transition: background-color 0.2s ease;
 }
 
 .tab.active {
-  background: #434343;
+  background: var(--bg-tag);
+}
+
+.tab:hover {
+  background: var(--bg-tag-hover);
 }
 
 .add-tab-button {
   padding: 0px 8px;
+  color: var(--text-heading);
 }
 
 .chart {

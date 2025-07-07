@@ -93,89 +93,91 @@
   
 <style scoped>
 .footer-bar {
-    display: flex;
-    justify-content: space-between;
-    background: #1e1e1e;
-    padding: 24px;
-    margin-top: 32px;
-    border-top: 1px solid #333;
-    color: #fff;
-    font-family: Inter, sans-serif;
-    gap: 16px;
+  display: flex;
+  justify-content: space-between;
+  background: #1e1e1e;
+  padding: 24px;
+  margin-top: 100px;
+  border-top: 1px solid var(--border-light);
+  color: var(--text-body);
+  font-family: Inter, sans-serif;
+  gap: 16px;
 }
 
 .footer-column {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex: 1;
-    padding: 0 8px;
-    min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  padding: 0 8px;
+  min-width: 160px;
 }
 
 .footer-column.wide {
-    flex: 2;
+  flex: 2;
 }
 
 .footer-title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
 .footer-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #ccc;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-label);
 }
 
 .footer-entry {
-    font-size: 13px;
-    color: #bbb;
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 .footer-entry a {
-    color: #60a5fa;
-    text-decoration: underline;
-    font-size: 13px;
+  color: #60a5fa;
+  text-decoration: underline;
+  font-size: 13px;
 }
 
 .footer-button {
-    background: #333;
-    border: 1px solid #555;
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    cursor: pointer;
+  background: var(--bg-tag);
+  border: 1px solid var(--border-light);
+  color: var(--text-body);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
 }
 
 .footer-button.small {
-    padding: 4px 8px;
-    font-size: 12px;
+  padding: 4px 8px;
+  font-size: 12px;
 }
 
 .footer-button:hover {
-    background: #444;
+  background: var(--bg-tag-hover);
 }
 
 .footer-divider {
-    width: 1px;
-    background: #444;
-    margin: 0 8px;
+  width: 1px;
+  background: var(--border-light);
+  margin: 0 8px;
 }
 
 .notes-scroll {
-    overflow-y: auto;
-    padding-right: 8px;
-    margin-bottom: 0;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-bottom: 0;
 }
+
 .notes-scroll p {
   font-size: 14px;
   line-height: 1.5;
-  color: #ccc;
+  color: var(--text-subheading);
 }
+
 
 </style>
   

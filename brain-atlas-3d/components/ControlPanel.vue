@@ -7,6 +7,7 @@
       <div class="button-row">
         <button class="small-button">Filter</button>
         <button class="small-button">Comparison</button>
+
       </div>
     </div>
 
@@ -46,16 +47,53 @@
 
     <div class="section">
       <h3 class="section-title">Brain Structure</h3>
+      <!-- <ul class="tree">
+        <li>
+          <span class="tree-toggle">▾</span> Cerebrum
+          <ul>
+            <li>Frontal Lobe</li>
+            <li>Parietal Lobe</li>
+            <li>Temporal Lobe</li>
+            <li>Occipital Lobe</li>
+          </ul>
+        </li>
+      </ul> -->
     </div>
   </div>
+
+  <InsightPanel />
+
+  <div class="header-bar">
+    <h2 class="title">Moving the Hand</h2>
+    <select class="dropdown">
+      <option>Average Brain</option>
+      <option>Parkinson’s Disease</option>
+      <option>Paraplegic</option>
+      <option>Tetraplegic</option>
+    </select>
+  </div>
+
+  <div class="mode-switch">
+    <div class="tab-bar-wrapper">
+      <div class="tab-bar">
+        <button class="tab active">🧠 3D Model</button>
+        <button class="tab">📊 Slices</button>
+        <button class="tab">🗺️ Flatmap</button>
+      </div>
+    </div>
+  </div>
+
+  <NuxtLink to="/analytics" class="analytics-button-link">
+    <button class="small-button">📈 Analytics</button>
+  </NuxtLink>
 </template>
 
 <script setup>
 const emit = defineEmits(['play-clicked'])
+// All logic stays unchanged for now
 </script>
 
-<style scoped>
-.control-panel {
+<style scoped>.control-panel {
   position: absolute;
   left: 24px;
   top: 112px;
@@ -65,6 +103,75 @@ const emit = defineEmits(['play-clicked'])
   background: var(--bg-dropdown);
   color: var(--text-body);
   font-family: Inter, sans-serif;
+}
+
+.header-bar {
+  position: absolute;
+  top: 16px;
+  left: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  color: var(--text-heading);
+}
+
+.header-bar .title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.dropdown {
+  height: 28px;
+  font-size: 14px;
+  padding: 2px 20px 2px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-input);
+  color: var(--text-heading);
+}
+
+.mode-switch {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.tab-bar-wrapper {
+  padding: 2px;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  margin-bottom: 32px;
+  display: inline-block;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 2px;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  color: var(--text-heading);
+  padding: 6px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tab.active {
+  background: var(--bg-tag);
+}
+
+.tab:hover {
+  background: var(--bg-tag-hover);
+}
+
+.mode-button {
+  display: none;
 }
 
 .section {
@@ -159,6 +266,16 @@ const emit = defineEmits(['play-clicked'])
 
 .icon-eye {
   font-size: 16px;
+}
+
+.tree {
+  list-style: none;
+  padding-left: 0;
+  font-size: 12px;
+}
+
+.tree-toggle {
+  margin-right: 4px;
 }
 
 hr {

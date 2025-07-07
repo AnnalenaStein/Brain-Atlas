@@ -20,7 +20,7 @@
   <script setup>
   // nothing needed here unless dynamic user logic comes in
   </script>
-  
+
   <style scoped>
 .header-bar {
   display: flex;
@@ -43,7 +43,7 @@
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    color: white;
+    color: var(--text-heading);
   }
   
   .logo-icon {
@@ -62,14 +62,14 @@
   }
   
   .nav-link {
-    color: #aaa;
+    color: var(--text-muted);
     text-decoration: none;
     font-weight: 500;
   }
   
   .nav-link.active {
     text-decoration: underline;
-    color: #fff;
+    color: var(--text-heading);
   }
   
   .user-info {
@@ -79,7 +79,7 @@
   }
   
   .user-dot {
-    background-color: #ccc;
+    background-color: var(--text-muted);
     width: 16px;
     height: 16px;
     border-radius: 50%;
@@ -87,6 +87,7 @@
   
   .username {
     font-weight: 500;
+    color: var(--text-subheading);
   }
   </style>
   

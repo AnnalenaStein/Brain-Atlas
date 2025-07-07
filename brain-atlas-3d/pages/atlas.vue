@@ -130,15 +130,18 @@ onMounted(() => {
 })
 </script>
 
-<style>
+<style scoped>
 canvas {
   width: 100%;
   height: 100vh;
   display: block;
-  background-color: #000000;
+  background-color: var(--bg-app);
 }
 
 .main-wrapper {
   margin-top: 50px;
+  background-color: var(--bg-app);
+  color: var(--text-body);
+  font-family: Inter, sans-serif;
 }
 </style>

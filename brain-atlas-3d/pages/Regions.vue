@@ -67,12 +67,16 @@
   
   .video-element {
     width: 100%;
-    height: 100%;
     object-fit: cover;
+    background-color: var(--bg-app);
   }
   
   .main-wrapper {
     background-color: black;
+    color: var(--text-body);
+    font-family: Inter, sans-serif;
+    padding-top: 55px;
   }
   </style>
+  
   
