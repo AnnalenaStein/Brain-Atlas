@@ -7,7 +7,7 @@
       
       <nav class="nav-links">
         <NuxtLink to="/atlas" class="nav-link" :class="{ active: $route.path === '/atlas' }">Atlas</NuxtLink>
-        <NuxtLink to="/insight-space" class="nav-link" :class="{ active: $route.path === '/insight-space' }">Insight Space</NuxtLink>
+        <NuxtLink to="/InsightSpace" class="nav-link" :class="{ active: $route.path === '/InsightSpace' }">Insight Space</NuxtLink>
       </nav>
   
       <div class="user-info">
@@ -18,7 +18,6 @@
   </template>
   
   <script setup>
-  // nothing needed here unless dynamic user logic comes in
   </script>
 
   <style scoped>
