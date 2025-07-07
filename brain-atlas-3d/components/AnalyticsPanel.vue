@@ -1,14 +1,18 @@
 <template>
-    <div class="back-button">
-      <router-link to="/atlas" class="small-button">← Back to Atlas</router-link>
-</div>
-<div class="header-bar">
+  <div class="back-button">
+    <router-link to="/atlas" class="small-button">← Back to Atlas</router-link>
+  </div>
+  <div class="header-bar">
     <h2 class="title">Analytics</h2>
   </div>
 
   <div class="control-panel">
     <div class="section">
-      <h3 class="section-title">🔗 Regionselection</h3>
+      <div class="section-title row" style="justify-content: space-between; align-items: center;">
+        <span>🔗 Regionselection</span>
+        <span style="font-size: 20px; color: #aaa; line-height: 1;">⌄</span>
+      </div>
+
       <!-- <p class="small-text">Choose a region to analyze</p> -->
     </div>
 
@@ -110,7 +114,8 @@ function formatTime(seconds) {
 }
 </script>
 
-<style scoped>.control-panel {
+<style scoped>
+.control-panel {
   position: absolute;
   left: 24px;
   top: 144px;
@@ -126,7 +131,7 @@ function formatTime(seconds) {
 /* HEADER */
 .header-bar {
   position: absolute;
-  top: 72px;
+  top: 80px;
   left: 32px;
   display: flex;
   flex-direction: column;

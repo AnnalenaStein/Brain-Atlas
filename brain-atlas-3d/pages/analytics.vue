@@ -296,7 +296,7 @@ const barChartOptions = {
     {
       name: 'Mean Activation',
       type: 'bar',
-      data: Object.keys(regionColorMap).map((region, i) => 1.4 - i * 0.1),
+      data: [1.38, 1.34, 1.29, 1.16, 1.08, 1.04, 0.95, 0.91, 0.87],
       itemStyle: {
         color: function (params) {
           return regionColorMap[params.name] || '#888'
@@ -394,7 +394,7 @@ const chartOptions = computed(() => {
 }
 
 .chart {
-  width: 90%;
+  width: 98%;
   height: 600px;
   margin-left: 24px;
 }
