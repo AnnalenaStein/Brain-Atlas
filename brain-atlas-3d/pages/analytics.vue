@@ -23,6 +23,9 @@
         <InsightPanel />
       </div>
     </div>
+    
+    <Footer />
+
   </div>
 </template>
 
@@ -32,6 +35,7 @@ import { useRouter } from '#app'
 import ECharts from 'vue-echarts'
 import AnalyticsPanel from '~/components/AnalyticsPanel.vue'
 import InsightPanel from '~/components/InsightPanel.vue'
+import Footer from '~/components/Footer.vue'
 
 import { use } from 'echarts/core'
 import { ScatterChart, LineChart, BarChart } from 'echarts/charts'
