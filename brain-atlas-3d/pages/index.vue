@@ -11,7 +11,7 @@
         <div class="relative flex items-center">
           <input id="activityInput" v-model="searchQuery" type="text" placeholder="Playing an Instrument"
             @keyup.enter="handleEnter"
-            class="w-full px-4 py-2 rounded-md bg-input border border-border text-body focus:outline-none focus:ring-2 focus:ring-base placeholder-muted" />
+            class="w-full px-4 py-2 rounded-md focus:bg-[rgba(59,59,59,0.8)] border text-body focus:outline-none focus:ring-1.5 focus:ring-base placeholder-muted" />
         </div>
       </div>
     </div>
