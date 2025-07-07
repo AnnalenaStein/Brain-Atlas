@@ -31,8 +31,8 @@
   // Liste deiner Videos
   const videoSources = [
     '/assets/Gehirn_komplett.mp4',
-    '/assets/video2.mp4',
-    '/assets/video3.mp4'
+    '/assets/Motor_System.mp4',
+    '/assets/Motor_System_hover.mp4'
   ]
   const currentIndex = ref(0)
   
@@ -53,7 +53,7 @@
     }
   })
   
-  // Zum nächsten Video springen
+//   // Zum nächsten Video springen
   const playNextVideo = () => {
     currentIndex.value = (currentIndex.value + 1) % videoSources.length
   }
