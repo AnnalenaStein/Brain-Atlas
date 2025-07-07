@@ -1,4 +1,5 @@
 <template>
+  <HeaderBar />
   <div class="analytics-wrapper">
     <button class="back-button" @click="goBack">← Back to Atlas</button>
 

@@ -1,11 +1,12 @@
 <template>
+  <HeaderBar />
   <div class="min-h-screen bg-bg-app text-base relative">
-    <button
+    <!-- <button
       @click="$router.push('/')"
       class="absolute top-4 left-4 z-50 px-4 py-1 bg-tag hover:bg-tagHover text-text-body rounded text-sm"
     >
       ← Back
-    </button>
+    </button> -->
     <canvas ref="canvas"></canvas>
     <ControlPanel />
   </div>

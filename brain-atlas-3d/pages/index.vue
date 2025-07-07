@@ -1,4 +1,5 @@
-<template>
+<template>   
+ <HeaderBar />
   <div class="flex flex-col items-center justify-center min-h-screen bg-bg text-base px-4 relative">
     <h1 class="text-heading mb-6 text-center">Explore the Brain</h1>
 
@@ -77,6 +78,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import HeaderBar from '@/components/HeaderBar.vue'
 
 const router = useRouter()
 const searchQuery = ref('')
