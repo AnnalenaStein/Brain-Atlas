@@ -34,7 +34,7 @@ import AnalyticsPanel from '~/components/AnalyticsPanel.vue'
 import InsightPanel from '~/components/InsightPanel.vue'
 
 import { use } from 'echarts/core'
-import { ScatterChart, LineChart } from 'echarts/charts'
+import { ScatterChart, LineChart, BarChart } from 'echarts/charts'
 import {
   TooltipComponent,
   LegendComponent,
@@ -47,6 +47,7 @@ import { CanvasRenderer } from 'echarts/renderers'
 use([
   ScatterChart,
   LineChart,
+  BarChart,
   TooltipComponent,
   LegendComponent,
   TitleComponent,
@@ -66,6 +67,18 @@ function addCustomChart() {
   alert('Custom chart hinzufügen – Funktion folgt.')
 }
 
+const regionColorMap = {
+  'PMC': '#fef08a',        // sehr hellgelb
+  'SMA': '#facc15',        // mittelgelb
+  'M1': '#ca8a04',         // dunkelgelb / ocker
+  'S1': '#ef4444',         // rot
+  'CMA': '#06b6d4',        // kräftiges cyan
+  'PPC': '#ec4899',        // pink
+  'Cerebellum': '#3b82f6', // kräftiges blau
+  'Basal Ganglia': '#8b5cf6', // violett
+  'Thalamus': '#ea580c'    // kräftiges orange
+}
+
 const labelStyle = {
   show: false,
   position: 'top',
@@ -76,7 +89,6 @@ const labelStyle = {
     show: true
   }
 }
-
 const clusterChartOptions = {
   backgroundColor: '#000',
   tooltip: {
@@ -169,6 +181,7 @@ const clusterChartOptions = {
   ]
 }
 
+
 const timeChartOptions = {
   backgroundColor: '#000',
   title: {
@@ -177,7 +190,14 @@ const timeChartOptions = {
     textStyle: { color: '#fff' }
   },
   tooltip: {
-    trigger: 'axis'
+    trigger: 'axis',
+    formatter: function (params) {
+      return params.map(p => {
+        const color = regionColorMap[p.seriesName] || '#fff'
+        return `<span style="display:inline-block;margin-right:6px;border-radius:50%;width:10px;height:10px;background:${color}"></span>
+          <strong>${p.seriesName}</strong>: ${p.data.toFixed(2)}`
+      }).join('<br/>')
+    }
   },
   legend: { show: false },
   xAxis: {
@@ -198,20 +218,19 @@ const timeChartOptions = {
     nameTextStyle: { color: '#fff' },
     axisLabel: { color: '#fff' }
   },
-  series: ['M1', 'PMC', 'SMA', 'S1', 'Cerebellum'].map((name, idx) => {
-    const colors = ['#3b82f6', '#facc15', '#22c55e', '#ef4444', '#8b5cf6']
+  series: ['M1', 'PMC', 'SMA', 'S1', 'Cerebellum'].map((name) => {
     const data = Array.from({ length: 20 }, () => Math.random() * 2 - 1)
     return {
       name,
       type: 'line',
       data,
       smooth: true,
-      lineStyle: { color: colors[idx] },
-      label: { show: false }, // keine Zwischen-Labels
+      lineStyle: { color: regionColorMap[name] || '#888' },
+      label: { show: false },
       endLabel: {
         show: true,
         formatter: () => name,
-        color: colors[idx],
+        color: regionColorMap[name] || '#fff',
         fontSize: 12,
         distance: 12
       },
@@ -225,6 +244,71 @@ const timeChartOptions = {
   })
 }
 
+const barChartOptions = {
+  backgroundColor: '#000',
+  title: {
+    text: 'Region comparison – brain activity during hand movement',
+    left: '48',
+    textStyle: { color: '#fff' }
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: { type: 'shadow' },
+    formatter: function (params) {
+      const region = params[0].name
+      const value = params[0].value
+      const color = regionColorMap[region] || '#fff'
+      const roleMap = {
+        'PMC': 'Prämotorisch',
+        'SMA': 'Prämotorisch',
+        'M1': 'Primär motorisch',
+        'S1': 'Sensorisch',
+        'CMA': 'Motorisch (assoziativ)',
+        'PPC': 'Räumlich-planend',
+        'Cerebellum': 'Feinmotorik & Koordination',
+        'Basal Ganglia': 'Bewegungsselektion',
+        'Thalamus': 'Sensorisches Relay'
+      }
+      const role = roleMap[region] || 'Unbekannt'
+      return `<span style="display:inline-block;margin-right:6px;border-radius:50%;width:10px;height:10px;background:${color}"></span>
+        <strong>${region}</strong><br/>
+        Aktivierung: ${value.toFixed(2)}<br/>
+        Funktion: ${role}`
+    }
+  },
+  xAxis: {
+    type: 'category',
+    data: Object.keys(regionColorMap),
+    axisLabel: {
+      color: '#fff',
+      rotate: 30
+    },
+    axisLine: { lineStyle: { color: '#888' } }
+  },
+  yAxis: {
+    type: 'value',
+    name: 'Avg Activation (BOLD)',
+    nameTextStyle: { color: '#fff' },
+    axisLabel: { color: '#fff' },
+    splitLine: { lineStyle: { color: '#444', type: 'dashed' } }
+  },
+  series: [
+    {
+      name: 'Mean Activation',
+      type: 'bar',
+      data: Object.keys(regionColorMap).map((region, i) => 1.4 - i * 0.1),
+      itemStyle: {
+        color: function (params) {
+          return regionColorMap[params.name] || '#888'
+        }
+      },
+      barWidth: '60%',
+      emphasis: {
+        focus: 'series'
+      }
+    }
+  ]
+}
 
 const chartOptions = computed(() => {
   if (activeTab.value === 'time') return timeChartOptions
@@ -232,6 +316,7 @@ const chartOptions = computed(() => {
   return clusterChartOptions
 })
 </script>
+
 
 <style scoped>
 .analytics-wrapper {
@@ -302,6 +387,10 @@ const chartOptions = computed(() => {
 
 .tab.active {
   background: #434343;
+}
+
+.add-tab-button {
+  padding: 0px 8px;
 }
 
 .chart {
