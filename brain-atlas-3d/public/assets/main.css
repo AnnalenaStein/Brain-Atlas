@@ -2,22 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Farb- und Textsystem */
+/* Farb- und Textsystem – basierend auf Analytics Panel */
 :root {
   --bg-app: #101010;
   --bg-input: #1a1a1a;
-  --bg-dropdown: #171717;
-  --bg-tag: #323232;
-  --bg-tag-hover: #545454;
+  --bg-dropdown: rgba(81, 81, 81, 0.4);
+  --bg-tag: #434343;
+  --bg-tag-hover: #5c5c5c;
 
-  --border-default: #606060;
-  --border-light: #4d4d4d;
+  --border-default: #999999;
+  --border-light: #6a6a6a;
 
   --text-heading: #ffffff;
-  --text-subheading: #e5e7eb;
-  --text-body: #d1d5db;
-  --text-muted: #9ca3af;
-  --text-label: #6b7280;
+  --text-subheading: #f5f5f5;
+  --text-body: #e1e1e1;
+  --text-muted: #a0a0a0;
+  --text-label: #d0d0d0;
 }
 
 /* Hintergrund */
@@ -45,17 +45,18 @@
   border-color: var(--border-light);
 }
 
-/* Schriftklassen (ohne @apply) */
+/* Schriftklassen */
 .text-heading {
-  font-size: 1.875rem;     /* entspricht text-3xl */
+  font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 600;
   color: var(--text-heading);
 }
 @media (min-width: 768px) {
   .text-heading {
-    font-size: 3rem;       /* entspricht text-5xl */
-    line-height: 1;
+    font-size: 3rem;
+    font-weight: 500;
+    font-family: playfair-display, serif;
   }
 }
 

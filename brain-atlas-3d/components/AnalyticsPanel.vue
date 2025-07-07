@@ -10,10 +10,8 @@
     <div class="section">
       <div class="section-title row" style="justify-content: space-between; align-items: center;">
         <span>🔗 Regionselection</span>
-        <span style="font-size: 20px; color: #aaa; line-height: 1;">⌄</span>
+        <span style="font-size: 20px; color: var(--text-muted); line-height: 1;">⌄</span>
       </div>
-
-      <!-- <p class="small-text">Choose a region to analyze</p> -->
     </div>
 
     <hr />
@@ -72,15 +70,6 @@
         <span class="time-label">{{ formatTime(end) }}</span>
       </div>
     </div>
-
-    <hr />
-
-    <!-- <div class="section">
-      <h3 class="section-title">📤 Export</h3>
-      <div class="button-row">
-        <button class="small-button">Export</button>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -122,13 +111,12 @@ function formatTime(seconds) {
   width: 18vw;
   padding: 16px;
   border-radius: 8px;
-  background: rgba(81, 81, 81, 0.4);
-  color: #fff;
+  background: var(--bg-dropdown);
+  color: var(--text-body);
   font-family: Inter, sans-serif;
   z-index: 1;
 }
 
-/* HEADER */
 .header-bar {
   position: absolute;
   top: 80px;
@@ -137,7 +125,7 @@ function formatTime(seconds) {
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  color: #ffffff;
+  color: var(--text-heading);
 }
 
 .back-button {
@@ -151,10 +139,9 @@ function formatTime(seconds) {
 .title {
   font-size: 24px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-heading);
 }
 
-/* SECTION TITLES */
 .section {
   display: flex;
   flex-direction: column;
@@ -166,28 +153,26 @@ function formatTime(seconds) {
   font-size: 16px;
   font-weight: 520;
   margin-bottom: 4px;
-  color: #f5f5f5;
+  color: var(--text-subheading);
 }
 
-/* TEXT & LABELS */
 .label {
   font-size: 14px;
   font-weight: 400;
-  color: #d0d0d0;
+  color: var(--text-label);
 }
 
 .small-text {
   font-size: 13px;
   font-weight: 300;
-  color: #a0a0a0;
+  color: var(--text-muted);
 }
 
-/* INPUTS */
 .dropdown,
 .number-input {
-  background: #1a1a1a;
-  color: #e1e1e1;
-  border: 1px solid #999999;
+  background: var(--bg-input);
+  color: var(--text-body);
+  border: 1px solid var(--border-default);
   border-radius: 6px;
   font-size: 14px;
   padding: 4px 8px;
@@ -202,20 +187,17 @@ function formatTime(seconds) {
   width: 60px;
 }
 
-/* SLIDER */
 .slider {
   width: 100%;
   height: 4px;
   margin: 4px 0 8px;
 }
 
-/* HR */
 hr {
-  border: 0.1px solid #6a6a6a;
+  border: 0.1px solid var(--border-light);
   margin: 16px 0;
 }
 
-/* BUTTONS */
 .button-row,
 .media-buttons {
   display: flex;
@@ -230,18 +212,18 @@ hr {
 
 .small-button {
   padding: 4px 8px;
-  background: #434343;
+  background: var(--bg-tag);
   border: none;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 400;
-  color: #fff;
+  color: var(--text-heading);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .small-button:hover {
-  background-color: #5c5c5c;
+  background-color: var(--bg-tag-hover);
 }
 
 .icon-button {
@@ -249,7 +231,7 @@ hr {
   background: none;
   border: none;
   cursor: pointer;
-  color: #ffffff;
+  color: var(--text-heading);
   transition: color 0.2s ease;
 }
 
@@ -257,7 +239,6 @@ hr {
   color: #3b82f6;
 }
 
-/* RANGE SLIDER */
 .range-container {
   position: relative;
   height: 36px;
@@ -296,24 +277,22 @@ input[type='range'].thumb::-moz-range-thumb {
   pointer-events: all;
   width: 16px;
   height: 16px;
-  background: #fff;
+  background: var(--text-heading);
   border-radius: 50%;
   border: 2px solid #3b82f6;
   position: relative;
   z-index: 3;
 }
 
-/* TIME LABELS */
 .time-label {
   font-size: 12px;
-  color: #bfbfbf;
+  color: var(--text-muted);
 }
 
 .time-row {
   margin-top: -24px;
 }
 
-/* MISC */
 .row {
   display: flex;
   align-items: center;

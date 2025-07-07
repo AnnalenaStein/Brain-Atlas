@@ -10,6 +10,7 @@
     </button> -->
     <canvas ref="canvas"></canvas>
     <ControlPanel />
+    <InsightPanel />
   </div>
 </div>
 </template>
