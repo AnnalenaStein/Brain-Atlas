@@ -91,7 +91,7 @@
     </div>
 </template>
   
-<style scoped>
+<style scoped> 
 .footer-bar {
   display: flex;
   justify-content: space-between;
@@ -175,7 +175,7 @@
 .notes-scroll p {
   font-size: 14px;
   line-height: 1.5;
-  color: var(--text-subheading);
+  color: var(--text-body);
 }
 
 
