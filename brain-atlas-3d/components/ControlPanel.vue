@@ -7,7 +7,7 @@
       <div class="button-row">
         <button class="small-button">Filter</button>
         <button class="small-button">Comparison</button>
-        
+
       </div>
     </div>
 
@@ -70,13 +70,6 @@
     </select>
   </div>
 
-  <div class="header-bar">
-    <h2 class="title">Moving the Hand</h2>
-    <select class="dropdown">
-      <option>Average Brain</option>
-    </select>
-  </div>
-
   <div class="mode-switch">
     <div class="tab-bar-wrapper">
       <div class="tab-bar">
@@ -88,10 +81,8 @@
   </div>
 
   <NuxtLink to="/analytics" class="analytics-button-link">
-  <button class="small-button">📈 Analytics</button>
-</NuxtLink>
-
-
+    <button class="small-button">📈 Analytics</button>
+  </NuxtLink>
 </template>
 
 <script setup>
@@ -102,8 +93,8 @@ const emit = defineEmits(['play-clicked'])
 <style scoped>
 .control-panel {
   position: absolute;
-  left: 16px;
-  top: 96px;
+  left: 24px;
+  top: 112px;
   width: 18vw;
   padding: 16px;
   border-radius: 8px;
@@ -115,15 +106,16 @@ const emit = defineEmits(['play-clicked'])
 .header-bar {
   position: absolute;
   top: 16px;
-  left: 16px;
+  left: 32px;
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column; /* Ändert die Ausrichtung */
+  align-items: flex-start;
+  gap: 16px; /* Abstand zwischen Title und Dropdown */
   color: white;
 }
 
 .header-bar .title {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 600;
 }
 
@@ -135,7 +127,6 @@ const emit = defineEmits(['play-clicked'])
   border: 1px solid #ccc;
   background: #1a1a1a;
   color: white;
-  margin-left: 12px;
 }
 
 .mode-switch {
@@ -276,7 +267,7 @@ hr {
 
 .analytics-button-link {
   position: absolute;
-  bottom: 24px;
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;

@@ -16,7 +16,7 @@
   .insight-box {
   position: absolute;
   right: 16px;
-  bottom: 32px;
+  bottom: 80px;
   width: 316px;
   padding: 16px;
   border-radius: 8px;

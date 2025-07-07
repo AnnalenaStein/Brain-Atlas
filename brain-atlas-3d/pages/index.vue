@@ -78,7 +78,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import HeaderBar from '@/components/HeaderBar.vue'
 
 const router = useRouter()
 const searchQuery = ref('')
