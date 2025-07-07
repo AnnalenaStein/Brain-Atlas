@@ -342,6 +342,7 @@ const chartOptions = computed(() => {
   align-items: flex-start;
   gap: 0px;
   width: 100%;
+  padding-top: 64px;
 
 }
 

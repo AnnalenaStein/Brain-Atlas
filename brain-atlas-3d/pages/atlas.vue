@@ -1,6 +1,7 @@
 <template>
+<div class="main-wrapper">
   <HeaderBar />
-  <div class="min-h-screen bg-bg-app text-base relative">
+  <div class="min-h-screen bg-bg-app text-base relative ">
     <!-- <button
       @click="$router.push('/')"
       class="absolute top-4 left-4 z-50 px-4 py-1 bg-tag hover:bg-tagHover text-text-body rounded text-sm"
@@ -10,6 +11,7 @@
     <canvas ref="canvas"></canvas>
     <ControlPanel />
   </div>
+</div>
 </template>
 
 <script setup>
@@ -133,5 +135,9 @@ canvas {
   height: 100vh;
   display: block;
   background-color: #000000;
+}
+
+.main-wrapper {
+  margin-top: 50px;
 }
 </style>
