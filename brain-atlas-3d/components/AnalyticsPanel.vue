@@ -1,19 +1,19 @@
 <template>
-  <div class="analytics-panel">
+  <div class="header-bar">
+    <button class="small-button" @click="goBack">← Back to Atlas</button>
+    <h2 class="title">Analytics</h2>
+  </div>
+
+  <div class="control-panel">
     <div class="section">
-      <!-- 🔗 Regionselection -->
-      <div class="section-header">
-        <span class="section-title">🔗 Regionselection</span>
-        <span class="chevron">⌄</span>
-      </div>
+      <h3 class="section-title">🔗 Regionselection</h3>
+      <!-- <p class="small-text">Choose a region to analyze</p> -->
     </div>
 
     <hr />
 
-    <!-- ⚙️ Cluster Settings -->
     <div class="section">
       <h3 class="section-title">⚙️ Cluster Settings</h3>
-
       <div class="form-group">
         <label class="label">Clustering Method</label>
         <select class="dropdown">
@@ -22,45 +22,37 @@
           <option>Hierarchical</option>
         </select>
       </div>
-
       <div class="form-group row">
-        <label class="label-inline">Number of Clusters</label>
+        <label class="label">Number of Clusters</label>
         <input type="number" class="number-input" v-model="clusterCount" min="2" max="10" />
       </div>
-
-      <div class="button-row top-margin">
+      <div class="button-row">
         <button class="small-button">Comparison</button>
+        <button class="small-button">Manupulate</button>
       </div>
     </div>
 
     <hr />
 
-    <!-- 🔍 Play -->
     <div class="section">
       <h3 class="section-title">🔍 Play</h3>
-
-      <div class="button-row">
+      <div class="media-buttons">
         <button class="icon-button">⏮</button>
         <button class="icon-button">▶️</button>
         <button class="icon-button">⏭</button>
       </div>
-
       <input type="range" class="slider" min="0" max="100" />
     </div>
 
-<hr />
+    <hr />
 
-    <!-- 🧪 Threshold Filter -->
     <div class="section">
       <h3 class="section-title">🧪 Threshold Filter</h3>
-
       <div class="row">
         <label class="label">Activation &lt;</label>
         <input type="number" class="number-input" step="0.1" min="0" max="1" v-model="activationThreshold" />
       </div>
-
       <input type="range" class="slider" min="0" max="1" step="0.01" v-model="activationThreshold" />
-
       <label class="label">Time Range</label>
       <div class="range-container">
         <div class="slider-track">
@@ -69,23 +61,23 @@
         <input type="range" :min="min" :max="max" v-model="start" class="thumb thumb-left" />
         <input type="range" :min="min" :max="max" v-model="end" class="thumb thumb-right" />
       </div>
-
-      <div class="row">
+      <div class="row time-row">
         <span class="time-label">{{ formatTime(start) }}</span>
         <span class="time-label">{{ formatTime(end) }}</span>
       </div>
     </div>
 
-<hr />
+    <hr />
 
-    <!-- 📤 Export -->
-    <div class="section">
+    <!-- <div class="section">
+      <h3 class="section-title">📤 Export</h3>
       <div class="button-row">
-        <button class="export-button">📤 Export</button>
+        <button class="small-button">Export</button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
+
 <script setup>
 import { ref, computed, watch } from 'vue'
 
@@ -115,59 +107,71 @@ function formatTime(seconds) {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
 }
 </script>
-<style scoped>
-.analytics-panel {
-  width: 260px;
+
+<style scoped>.control-panel {
+  position: absolute;
+  left: 24px;
+  top: 144px;
+  width: 18vw;
   padding: 16px;
+  border-radius: 8px;
   background: rgba(81, 81, 81, 0.4);
   color: #fff;
   font-family: Inter, sans-serif;
-  border-radius: 12px;
+}
+
+/* HEADER */
+.header-bar {
+  position: absolute;
+  top: 72px;
+  left: 32px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  color: #ffffff;
 }
 
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* SECTION TITLES */
 .section {
-  margin-bottom: 24px;
-}
-
-.section-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .section-title {
-  font-size: 14px;
-  font-weight: 600;
-  margin: 8px;
+  font-size: 16px;
+  font-weight: 520;
+  margin-bottom: 4px;
+  color: #f5f5f5;
 }
 
-.chevron {
-  color: #ccc;
-  font-size: 14px;
-}
-
-.label, .label-inline {
-  color: #dedede;
-  font-size: 14px;
-}
-
-hr {
-  border: 0.1px solid #6a6a6a;
-  margin: 0px 0px 8px 0px;
-}
-
+/* TEXT & LABELS */
 .label {
-  display: block;
-  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #d0d0d0;
 }
 
+.small-text {
+  font-size: 13px;
+  font-weight: 300;
+  color: #a0a0a0;
+}
+
+/* INPUTS */
 .dropdown,
 .number-input {
   background: #1a1a1a;
-  color: white;
-  border: 1px solid #ccc;
+  color: #e1e1e1;
+  border: 1px solid #999999;
   border-radius: 6px;
   font-size: 14px;
   padding: 4px 8px;
@@ -182,38 +186,66 @@ hr {
   width: 60px;
 }
 
+/* SLIDER */
 .slider {
   width: 100%;
   height: 4px;
-  margin: 8px 0 12px;
+  margin: 4px 0 8px;
+}
+
+/* HR */
+hr {
+  border: 0.1px solid #6a6a6a;
+  margin: 16px 0;
+}
+
+/* BUTTONS */
+.button-row,
+.media-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
 
 .button-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  justify-content: left;
 }
 
-.icon-button,
-.small-button,
-.export-button {
-  padding: 6px 12px;
-  background: #2e2e2e;
-  color: white;
+.small-button {
+  padding: 4px 8px;
+  background: #434343;
   border: none;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #fff;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.export-button {
-  background: #3b3b3b;
+.small-button:hover {
+  background-color: #5c5c5c;
 }
 
+.icon-button {
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  transition: color 0.2s ease;
+}
+
+.icon-button:hover {
+  color: #3b82f6;
+}
+
+/* RANGE SLIDER */
 .range-container {
   position: relative;
   height: 36px;
-  margin: 12px 0;
+  margin: -8px 0 8px;
 }
 
 .slider-track {
@@ -255,11 +287,17 @@ input[type='range'].thumb::-moz-range-thumb {
   z-index: 3;
 }
 
+/* TIME LABELS */
 .time-label {
   font-size: 12px;
-  color: #ccc;
+  color: #bfbfbf;
 }
 
+.time-row {
+  margin-top: -24px;
+}
+
+/* MISC */
 .row {
   display: flex;
   align-items: center;
@@ -268,10 +306,6 @@ input[type='range'].thumb::-moz-range-thumb {
 }
 
 .form-group {
-  margin-bottom: 16px;
-}
-
-.top-margin {
-  margin-top: 16px;
+  margin-bottom: 4px;
 }
 </style>
