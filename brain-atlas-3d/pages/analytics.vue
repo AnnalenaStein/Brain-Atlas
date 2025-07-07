@@ -106,7 +106,7 @@ const clusterChartOptions = {
   },
   xAxis: {
     name: 'PCA 1',
-    nameTextStyle: { color: '#fff' },
+    nameTextStyle: { color: '#fff', padding: [0, 0, 8, 0] },
     axisLabel: { color: '#fff' },
     splitLine: {
       lineStyle: {
@@ -119,7 +119,7 @@ const clusterChartOptions = {
   },
   yAxis: {
     name: 'PCA 2',
-    nameTextStyle: { color: '#fff' },
+    nameTextStyle: { color: '#fff', padding: [0, 8, 0, 0] },
     axisLabel: { color: '#fff' },
     splitLine: {
       lineStyle: {
@@ -172,21 +172,19 @@ const clusterChartOptions = {
 const timeChartOptions = {
   backgroundColor: '#000',
   title: {
-    text: 'Simulierter Zeitverlauf – Hirnaktivität bei Handbewegung (1–2s)',
-    left: 'center',
+    text: 'Simulated time course – brain activity during hand movement (1–2s)',
+    left: '48',
     textStyle: { color: '#fff' }
   },
   tooltip: {
     trigger: 'axis'
   },
-  legend: {
-    data: ['M1 (Motorisch)', 'PMC (Prämotorisch)', 'SMA (Supplementär)', 'S1 (Somatosensorisch)', 'Kleinhirn'],
-    textStyle: { color: '#fff' },
-    top: 30
-  },
+  legend: { show: false },
   xAxis: {
     type: 'category',
-    name: 'Zeit (s)',
+    name: 'Time (s)',
+    nameLocation: 'middle',
+    nameGap: 32,
     nameTextStyle: { color: '#fff' },
     axisLabel: { color: '#fff' },
     boundaryGap: false,
@@ -194,54 +192,37 @@ const timeChartOptions = {
   },
   yAxis: {
     type: 'value',
-    name: 'BOLD-Signal (simuliert)',
+    name: 'Activation (BOLD)',
+    nameLocation: 'middle',
+    nameGap: 40,
     nameTextStyle: { color: '#fff' },
     axisLabel: { color: '#fff' }
   },
-  series: [
-    { name: 'M1 (Motorisch)', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true },
-    { name: 'PMC (Prämotorisch)', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true },
-    { name: 'SMA (Supplementär)', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true },
-    { name: 'S1 (Somatosensorisch)', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true },
-    { name: 'Kleinhirn', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true }
-  ]
-}
-
-const barChartOptions = {
-  backgroundColor: '#000',
-  title: {
-    text: 'Aktivierungsvergleich nach Region (letzter Zeitpunkt)',
-    left: 'center',
-    textStyle: { color: '#fff' }
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: { type: 'shadow' }
-  },
-  legend: { show: false },
-  xAxis: {
-    type: 'category',
-    name: 'Region',
-    data: ['M1 (Motorisch)', 'PMC (Prämotorisch)', 'SMA (Supplementär)', 'S1 (Somatosensorisch)', 'Kleinhirn'],
-    axisLabel: { color: '#fff', rotate: 30 }
-  },
-  yAxis: {
-    type: 'value',
-    name: 'BOLD-Signalstärke (simuliert)',
-    axisLabel: { color: '#fff' }
-  },
-  series: [
-    {
-      type: 'bar',
-      data: [
-        { value: -0.55, itemStyle: { color: '#d97706' } },
-        { value: -1.0, itemStyle: { color: '#d97706' } },
-        { value: -0.9, itemStyle: { color: '#d97706' } },
-        { value: -0.85, itemStyle: { color: '#f97316' } },
-        { value: -0.65, itemStyle: { color: '#e11d48' } }
-      ]
+  series: ['M1', 'PMC', 'SMA', 'S1', 'Cerebellum'].map((name, idx) => {
+    const colors = ['#3b82f6', '#facc15', '#22c55e', '#ef4444', '#8b5cf6']
+    const data = Array.from({ length: 20 }, () => Math.random() * 2 - 1)
+    return {
+      name,
+      type: 'line',
+      data,
+      smooth: true,
+      lineStyle: { color: colors[idx] },
+      label: { show: false }, // keine Zwischen-Labels
+      endLabel: {
+        show: true,
+        formatter: () => name,
+        color: colors[idx],
+        fontSize: 12,
+        distance: 12
+      },
+      labelLayout: {
+        moveOverlap: 'shiftY'
+      },
+      emphasis: {
+        focus: 'series'
+      }
     }
-  ]
+  })
 }
 
 
@@ -295,7 +276,7 @@ const chartOptions = computed(() => {
 }
 
 .tab-bar-wrapper {
-  margin-bottom: 0px;
+  margin-bottom: 16px;
   margin-left: 32px;
   padding: 2px;
   border: 1px solid rgb(151, 151, 151);
@@ -324,8 +305,8 @@ const chartOptions = computed(() => {
 }
 
 .chart {
-  width: 105%;
+  width: 90%;
   height: 600px;
-  margin-left: -24px;
+  margin-left: 24px;
 }
 </style>

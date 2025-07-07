@@ -47,6 +47,10 @@
     color: #fff;
     cursor: pointer;
   }
+
+  .small-button:hover {
+  background-color: #5c5c5c;
+}
   
   .input {
     height: 32px;

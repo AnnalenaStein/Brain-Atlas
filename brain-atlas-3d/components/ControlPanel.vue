@@ -67,6 +67,9 @@
     <h2 class="title">Moving the Hand</h2>
     <select class="dropdown">
       <option>Average Brain</option>
+      <option>Parkinson’s Disease</option>
+      <option>Paraplegic</option>
+      <option>Tetraplegic</option>
     </select>
   </div>
 
