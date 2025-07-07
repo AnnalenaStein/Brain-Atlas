@@ -120,6 +120,7 @@ function formatTime(seconds) {
   background: rgba(81, 81, 81, 0.4);
   color: #fff;
   font-family: Inter, sans-serif;
+  z-index: 1;
 }
 
 /* HEADER */

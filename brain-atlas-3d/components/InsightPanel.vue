@@ -17,7 +17,7 @@
   position: absolute;
   right: 16px;
   bottom: 80px;
-  width: 316px;
+  width: 300px;
   padding: 16px;
   border-radius: 8px;
   background: rgba(81, 81, 81, 0.4);
@@ -60,9 +60,9 @@
   }
   
   .label {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
-    color: #dedede;
+    color: #a5a5a5;
     margin-bottom: 4px;
   }
   

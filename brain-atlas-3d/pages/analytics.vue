@@ -1,7 +1,6 @@
 <template>
   <HeaderBar />
   <div class="analytics-wrapper">
-
     <div class="main-layout">
       <div class="left-panel">
         <AnalyticsPanel />
@@ -40,11 +39,21 @@ import {
   TooltipComponent,
   LegendComponent,
   TitleComponent,
-  GridComponent
+  GridComponent,
+  AxisPointerComponent
 } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 
-use([ScatterChart, LineChart, TooltipComponent, LegendComponent, TitleComponent, GridComponent, CanvasRenderer])
+use([
+  ScatterChart,
+  LineChart,
+  TooltipComponent,
+  LegendComponent,
+  TitleComponent,
+  GridComponent,
+  AxisPointerComponent,
+  CanvasRenderer
+])
 
 const router = useRouter()
 const activeTab = ref('cluster')
@@ -57,20 +66,33 @@ function addCustomChart() {
   alert('Custom chart hinzufügen – Funktion folgt.')
 }
 
-
 const labelStyle = {
-  show: true,
-  formatter: (params) => params.name,
+  show: false,
   position: 'top',
   distance: 8,
   color: '#9ca3af',
-  fontSize: 12
+  fontSize: 12,
+  emphasis: {
+    show: true
+  }
 }
 
 const clusterChartOptions = {
   backgroundColor: '#000',
   tooltip: {
     trigger: 'item',
+    axisPointer: {
+      type: 'cross',
+      snap: true,
+      triggerOn: 'mousemove|click',
+      lineStyle: {
+        type: 'dashed',
+        color: '#888'
+      },
+      label: {
+        backgroundColor: '#6a7985'
+      }
+    },
     formatter: (params) => `
       <strong>${params.name}</strong><br/>
       PCA1: ${params.value[0].toFixed(2)}<br/>
@@ -86,7 +108,12 @@ const clusterChartOptions = {
     name: 'PCA 1',
     nameTextStyle: { color: '#fff' },
     axisLabel: { color: '#fff' },
-    splitLine: { lineStyle: { color: '#444' } },
+    splitLine: {
+      lineStyle: {
+        color: '#444',
+        type: 'dashed'
+      }
+    },
     min: -2,
     max: 2
   },
@@ -94,7 +121,12 @@ const clusterChartOptions = {
     name: 'PCA 2',
     nameTextStyle: { color: '#fff' },
     axisLabel: { color: '#fff' },
-    splitLine: { lineStyle: { color: '#444' } },
+    splitLine: {
+      lineStyle: {
+        color: '#444',
+        type: 'dashed'
+      }
+    },
     min: -2,
     max: 2
   },
@@ -103,9 +135,9 @@ const clusterChartOptions = {
       name: 'Cluster 1',
       type: 'scatter',
       data: [
-        { name: 'PMC', value: [-1.2, 0.8], label: { ...labelStyle } },
-        { name: 'SMA', value: [-1.0, 1.0], label: { ...labelStyle } },
-        { name: 'PPC', value: [-0.8, 0.9], label: { ...labelStyle } }
+        { name: 'Primary Motor Cortex (M1)', value: [-1.2, 0.8], label: { ...labelStyle } },
+        { name: 'Supplementary Motor Area (SMA)', value: [-1.0, 1.0], label: { ...labelStyle } },
+        { name: 'Premotor Cortex (PMC)', value: [-0.8, 0.9], label: { ...labelStyle } }
       ],
       symbolSize: 16,
       itemStyle: { color: '#facc15' }
@@ -114,8 +146,8 @@ const clusterChartOptions = {
       name: 'Cluster 2',
       type: 'scatter',
       data: [
-        { name: 'M1', value: [0.6, -0.4], label: { ...labelStyle } },
-        { name: 'S1', value: [0.8, -0.6], label: { ...labelStyle } }
+        { name: 'Primary Somatosensory Cortex (S1)', value: [0.6, -0.4], label: { ...labelStyle } },
+        { name: 'Secondary Somatosensory Cortex (S2)', value: [0.8, -0.6], label: { ...labelStyle } }
       ],
       symbolSize: 16,
       itemStyle: { color: '#fb7185' }
@@ -124,9 +156,12 @@ const clusterChartOptions = {
       name: 'Cluster 3',
       type: 'scatter',
       data: [
-        { name: 'Präfrontal', value: [-0.2, -1.0], label: { ...labelStyle } },
-        { name: 'Basalganglien', value: [0.0, -0.8], label: { ...labelStyle } },
-        { name: 'Kleinhirn', value: [0.2, -1.2], label: { ...labelStyle } }
+        { name: 'Prefrontal Cortex', value: [-0.2, -1.0], label: { ...labelStyle } },
+        { name: 'Basal Ganglia', value: [0.0, -0.8], label: { ...labelStyle } },
+        { name: 'Cerebellum', value: [0.2, -1.2], label: { ...labelStyle } },
+        { name: 'Thalamus', value: [0.5, -1.0], label: { ...labelStyle } },
+        { name: 'Posterior Parietal Cortex (PPC)', value: [-0.5, -1.2], label: { ...labelStyle } },
+        { name: 'Cingulate Motor Area (CMA)', value: [0.6, -1.3], label: { ...labelStyle } }
       ],
       symbolSize: 16,
       itemStyle: { color: '#38bdf8' }
@@ -155,7 +190,7 @@ const timeChartOptions = {
     nameTextStyle: { color: '#fff' },
     axisLabel: { color: '#fff' },
     boundaryGap: false,
-    data: Array.from({ length: 20 }, (_, i) => (1 + i * 0.05).toFixed(2)) // 1s–2s in 0.05s-Schritten
+    data: Array.from({ length: 20 }, (_, i) => (1 + i * 0.05).toFixed(2))
   },
   yAxis: {
     type: 'value',
@@ -164,36 +199,11 @@ const timeChartOptions = {
     axisLabel: { color: '#fff' }
   },
   series: [
-    {
-      name: 'M1 (Motorisch)',
-      type: 'line',
-      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
-      smooth: true
-    },
-    {
-      name: 'PMC (Prämotorisch)',
-      type: 'line',
-      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
-      smooth: true
-    },
-    {
-      name: 'SMA (Supplementär)',
-      type: 'line',
-      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
-      smooth: true
-    },
-    {
-      name: 'S1 (Somatosensorisch)',
-      type: 'line',
-      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
-      smooth: true
-    },
-    {
-      name: 'Kleinhirn',
-      type: 'line',
-      data: Array.from({ length: 20 }, () => Math.random() * 2 - 1),
-      smooth: true
-    }
+    { name: 'M1 (Motorisch)', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true },
+    { name: 'PMC (Prämotorisch)', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true },
+    { name: 'SMA (Supplementär)', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true },
+    { name: 'S1 (Somatosensorisch)', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true },
+    { name: 'Kleinhirn', type: 'line', data: Array.from({ length: 20 }, () => Math.random() * 2 - 1), smooth: true }
   ]
 }
 
@@ -213,10 +223,7 @@ const barChartOptions = {
     type: 'category',
     name: 'Region',
     data: ['M1 (Motorisch)', 'PMC (Prämotorisch)', 'SMA (Supplementär)', 'S1 (Somatosensorisch)', 'Kleinhirn'],
-    axisLabel: {
-      color: '#fff',
-      rotate: 30
-    }
+    axisLabel: { color: '#fff', rotate: 30 }
   },
   yAxis: {
     type: 'value',
@@ -227,16 +234,15 @@ const barChartOptions = {
     {
       type: 'bar',
       data: [
-        { value: -0.55, itemStyle: { color: '#d97706' } }, // Motorik
-        { value: -1.0, itemStyle: { color: '#d97706' } },   // Motorik
-        { value: -0.9, itemStyle: { color: '#d97706' } },   // Motorik
-        { value: -0.85, itemStyle: { color: '#f97316' } },  // Sensorik
-        { value: -0.65, itemStyle: { color: '#e11d48' } }   // Koordination
+        { value: -0.55, itemStyle: { color: '#d97706' } },
+        { value: -1.0, itemStyle: { color: '#d97706' } },
+        { value: -0.9, itemStyle: { color: '#d97706' } },
+        { value: -0.85, itemStyle: { color: '#f97316' } },
+        { value: -0.65, itemStyle: { color: '#e11d48' } }
       ]
     }
   ]
 }
-
 
 
 const chartOptions = computed(() => {
@@ -244,43 +250,29 @@ const chartOptions = computed(() => {
   if (activeTab.value === 'comparison') return barChartOptions
   return clusterChartOptions
 })
-
 </script>
-
 
 <style scoped>
 .analytics-wrapper {
   background: #000;
   color: white;
-  padding: 16px;
+  padding: 0px;
   min-height: 100vh;
   font-family: sans-serif;
 }
 
-.back-button {
-  margin-bottom: 20px;
-  background-color: #374151;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.back-button:hover {
-  background-color: #4b5563;
-}
-
-.page-title {
+/* .page-title {
   font-size: 24px;
-  margin-bottom: 16px;
-}
+  font-weight: 600;
+  margin-bottom: 12px;
+} */
 
 .main-layout {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 0px;
   width: 100%;
+
 }
 
 .left-panel {
@@ -296,22 +288,20 @@ const chartOptions = computed(() => {
 .chart-panel {
   flex: 1;
   min-width: 0;
-  padding: 16px;
-  border-radius: 8px;
+  padding: 90px 0px 0px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .tab-bar-wrapper {
-  display: inline-flex;         /* statt block → schrumpft auf Inhalt */
-  align-self: flex-start;       /* bleibt linksbündig */
-  margin-bottom: 16px;
-  padding: 4px;
-  border: 1px solid white;
+  margin-bottom: 0px;
+  margin-left: 32px;
+  padding: 2px;
+  border: 1px solid rgb(151, 151, 151);
   border-radius: 999px;
+  align-self: flex-start;
 }
-
 
 .tab-bar {
   display: flex;
@@ -322,10 +312,11 @@ const chartOptions = computed(() => {
   background: transparent;
   border: none;
   color: white;
-  padding: 6px 16px;
+  padding: 8px 12px;
   border-radius: 999px;
   cursor: pointer;
   font-size: 14px;
+  line-height: 1.2;
 }
 
 .tab.active {
@@ -333,8 +324,8 @@ const chartOptions = computed(() => {
 }
 
 .chart {
-  width: 100%;
-  height: 640px;
-  margin-bottom: 24px;
+  width: 105%;
+  height: 600px;
+  margin-left: -24px;
 }
 </style>
