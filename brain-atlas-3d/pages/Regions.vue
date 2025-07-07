@@ -37,11 +37,32 @@
   const currentIndex = ref(0)
   
   // Playback-Rate setzen, sobald Video geladen ist
-  onMounted(() => {
-    if (videoRef.value) {
-      videoRef.value.playbackRate = 0.75
-    }
-  })
+//   onMounted(() => {
+//     if (videoRef.value) {
+//       videoRef.value.playbackRate = 0.75
+//     }
+//   })
+
+let intervalId = null
+
+onMounted(() => {
+  const video = videoRef.value
+  if (video) {
+    video.playbackRate = 0.75
+    video.play()
+  }
+
+  // Starte Intervall alle 10 Sekunden
+  intervalId = setInterval(() => {
+    playNextVideo()
+  }, 10000)
+})
+
+onUnmounted(() => {
+  // Intervall aufräumen
+  clearInterval(intervalId)
+})
+
   
   // Wenn sich das Video ändert, erneut abspielen
   watch(currentIndex, () => {
