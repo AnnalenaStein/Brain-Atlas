@@ -1,6 +1,8 @@
 <template>
-  <div class="header-bar">
-    <button class="small-button" @click="goBack">← Back to Atlas</button>
+    <div class="back-button">
+      <router-link to="/atlas" class="small-button">← Back to Atlas</router-link>
+</div>
+<div class="header-bar">
     <h2 class="title">Analytics</h2>
   </div>
 
@@ -130,6 +132,14 @@ function formatTime(seconds) {
   align-items: flex-start;
   gap: 8px;
   color: #ffffff;
+}
+
+.back-button {
+  position: absolute;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
 .title {
