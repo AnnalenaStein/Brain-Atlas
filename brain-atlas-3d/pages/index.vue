@@ -1,7 +1,7 @@
 <template>
   <HeaderBar />
   <div class="flex flex-col items-center justify-center min-h-screen bg-bg text-base px-4 relative pt-20">
-    <h1 class="text-heading mb-6 text-center">Explore the Brain</h1>
+    <h1 class="text-heading mb-8 text-center">Explore the Brain</h1>
 
     <div class="w-full max-w-xl mb-4">
       <label class="text-label block text-label mb-1" for="activityInput">

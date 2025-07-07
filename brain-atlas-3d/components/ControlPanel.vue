@@ -16,9 +16,9 @@
     <div class="section">
       <h3 class="section-title">Play</h3>
       <div class="media-buttons">
-        <button class="icon-button">⏮️</button>
-        <button class="icon-button" @click="emit('play-clicked')">▶️</button>
-        <button class="icon-button">⏭️</button>
+        <button class="icon-button">⏮</button>
+        <button class="icon-button">▶️</button>
+        <button class="icon-button">⏭</button>
       </div>
       <input type="range" class="slider" />
     </div>
@@ -46,7 +46,10 @@
     <hr />
 
     <div class="section">
-      <h3 class="section-title">Brain Structure</h3>
+      <div class="section-title row" style="justify-content: space-between; align-items: center;">
+        <span>🔗 Brain Structure</span>
+        <span style="font-size: 20px; color: var(--text-muted); line-height: 1;">⌄</span>
+      </div>
       <!-- <ul class="tree">
         <li>
           <span class="tree-toggle">▾</span> Cerebrum

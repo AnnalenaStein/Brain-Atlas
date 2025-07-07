@@ -1,7 +1,7 @@
 <template>
     <header class="header-bar">
       <NuxtLink to="/" class="logo">
-        <!-- <img src="/icons/brain-logo.svg" alt="Brain Atlas Logo" class="logo-icon" /> -->
+        <img src="/assets/icons/logo2.png" alt="Brain Atlas Logo" class="logo-icon" />
         <span class="logo-text">Brain Atlas</span>
       </NuxtLink>
       
@@ -26,7 +26,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 24px;
+  padding: 12px 24px;
   background-color: #1a1a1a;
   color: white;
 
@@ -52,8 +52,10 @@
   }
   
   .logo-text {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: medium;
+    font-family: playfair, serif;
+    letter-spacing: 0.5px;
   }
   
   .nav-links {
@@ -79,15 +81,17 @@
   }
   
   .user-dot {
-    background-color: var(--text-muted);
+    background-color: rgb(145, 145, 145);
     width: 16px;
     height: 16px;
     border-radius: 50%;
   }
-  
+
   .username {
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 400;
     color: var(--text-subheading);
   }
+
   </style>
   
