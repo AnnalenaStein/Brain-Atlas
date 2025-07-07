@@ -2,15 +2,6 @@
   <HeaderBar />
   <div class="flex flex-col items-center justify-center min-h-screen bg-bg text-base px-4 relative pt-20">
     <h1 class="text-heading mb-6 text-center">Explore the Brain</h1>
-   
-   
-    <button
-  @click="router.push('/Regions')"
-  class="mt-2 px-4 py-2 rounded bg-primary hover:bg-primaryHover text-white"
->
-  Open Brain Video
-</button>
-
 
     <div class="w-full max-w-xl mb-4">
       <label class="text-label block text-label mb-1" for="activityInput">
@@ -94,10 +85,27 @@ const uploadDICOM = () => {
 
 const handleEnter = (e: KeyboardEvent) => {
   if (e.key === 'Enter' && searchQuery.value.trim()) {
-    const query: Record<string, string> = { q: searchQuery.value }
-    if (selectedMode.value) query.mode = selectedMode.value
-    if (selectedPerson.value) query.person = selectedPerson.value
-    router.push({ path: '/atlas', query })
+    const lowerQuery = searchQuery.value.toLowerCase()
+
+    if (
+      lowerQuery.includes('region') ||
+      lowerQuery.includes('area') ||
+      lowerQuery.includes('zone')
+    ) {
+      router.push('/Regions')
+    } else if (
+      lowerQuery.includes('movement') ||
+      lowerQuery.includes('activity') ||
+      lowerQuery.includes('action') ||
+      lowerQuery.includes('task') ||
+      lowerQuery.includes('moving')
+    ) {
+      const query: Record<string, string> = { q: searchQuery.value }
+      if (selectedMode.value) query.mode = selectedMode.value
+      if (selectedPerson.value) query.person = selectedPerson.value
+      router.push({ path: '/atlas', query })
+    }
   }
 }
+
 </script>
