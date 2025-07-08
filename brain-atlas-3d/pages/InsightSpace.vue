@@ -1,43 +1,58 @@
 <template>
-    <div class="flex h-100vh bg-bg text-white">
-        <HeaderBar />
-
-        <div class="main-wrapper flex flex-col flex-1 p-8">
-            <!-- Titel über den Spalten -->
-            <div class="grid grid-cols-[20rem_1fr] gap-6 mb-4">
-                <h2 class="text-heading">Recent Atlases</h2>
-                <h2 class="text-heading">Notes</h2>
-         
-
-            <aside
-                class="w-80 bg-[#161616] p-6 rounded-2xl border border-borderLight overflow-y-auto scrollbar-thin scrollbar-thumb-[#444] scrollbar-track-transparent">
-                <div v-for="atlas in recentAtlases" :key="atlas.title" class="mb-6 pb-4 border-b border-borderLight">
-                    <h4 class="text-label font-semibold mb-1">{{ atlas.title }}</h4>
-                    <p class="text-muted text-sm mb-2">Last viewed: {{ atlas.lastViewed }}</p>
-                    <button
-                        class="bg-[#333] text-white border border-[#666] px-3 py-1 rounded-md text-sm hover:bg-[#444] transition">
-                        View Atlas
-                    </button>
-                </div>
-            </aside>
-
-
-            <!-- rechte Spalte: Notes -->
-            <section
-                class="flex-1 bg-[#1a1a1a] rounded-2xl p-6 overflow-y-auto border border-borderLight scrollbar-thin scrollbar-thumb-[#444] scrollbar-track-transparent">
-                <div class="mb-10" v-for="(note, idx) in notes" :key="idx">
-                    <h3 class="text-subheading mb-2">{{ note.title }}</h3>
-                    <p class="text-subtitle mb-3">
-                        Note in
-                        <span class="underline text-[#65bfff] cursor-pointer">{{ note.region }}</span>
-                    </p>
-                    <p class="text-body whitespace-pre-line">{{ note.body }}</p>
-                </div>
-            </section>
+    <div class="flex h-screen bg-bg text-white">
+      <HeaderBar />
+  
+      <div class="main-wrapper flex flex-col flex-1 p-8">
+        <!-- Spaltenüberschriften -->
+        <div class="grid grid-cols-[20rem_1fr] gap-6 mb-2">
+          <h2 class="text-heading">Recent Atlases</h2>
+          <div class="flex items-center justify-between">
+            <h2 class="text-heading">Notes</h2>
+            <div class="flex gap-2">
+              <button
+                class="small-button px-3 py-1.5 text-sm bg-[#2a2a2a] text-white rounded-md border border-[#444] hover:bg-[#333] transition">
+                Sort ▼
+              </button>
+              <button
+                class="small-button px-3 py-1.5 text-sm text-white rounded-md hover:bg-[#555] transition">
+                View all
+              </button>
+            </div>
+          </div>
         </div>
+  
+        <!-- Inhalt in 2 Spalten -->
+        <div class="flex gap-6 h-full">
+          <!-- Linke Spalte: Recent Atlases -->
+          <aside
+            class="w-80 bg-[#161616] p-6 rounded-2xl border border-borderLight overflow-y-auto scrollbar-thin scrollbar-thumb-[#444] scrollbar-track-transparent">
+            <div v-for="atlas in recentAtlases" :key="atlas.title" class="mb-6 pb-4 border-b border-borderLight">
+              <h4 class="text-label font-semibold mb-1">{{ atlas.title }}</h4>
+              <p class="text-muted text-sm mb-2">Last viewed: {{ atlas.lastViewed }}</p>
+              <button
+                class="bg-[#333] text-white border border-[#666] px-3 py-1 rounded-md text-sm hover:bg-[#444] transition">
+                View Atlas
+              </button>
+            </div>
+          </aside>
+  
+          <!-- Rechte Spalte: Notes -->
+          <section
+            class="flex-1 bg-[#1a1a1a] rounded-2xl p-6 overflow-y-auto border border-borderLight scrollbar-thin scrollbar-thumb-[#444] scrollbar-track-transparent">
+            <div class="mb-10" v-for="(note, idx) in notes" :key="idx">
+              <h3 class="text-subheading mb-2">{{ note.title }}</h3>
+              <p class="text-subtitle mb-3">
+                Note in
+                <span class="underline text-[#65bfff] cursor-pointer">{{ note.region }}</span>
+              </p>
+              <p class="text-body whitespace-pre-line">{{ note.body }}</p>
+            </div>
+          </section>
+        </div>
+      </div>
     </div>
-</div>
-</template>
+  </template>
+  
   
   
 <script setup>
@@ -113,6 +128,24 @@ const recentAtlases = [
     font-size: 1.2rem;
     font-weight: 500;
 }
+
+.small-button {
+  padding: 4px 8px;
+  background: var(--bg-tag);
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-heading);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.small-button:hover {
+  background-color: var(--bg-tag-hover);
+}
+
+
 
 .text-subtitle {
     font-size: 0.875rem;
