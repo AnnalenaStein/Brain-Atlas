@@ -90,6 +90,7 @@ const handleEnter = (e: KeyboardEvent) => {
     if (
       lowerQuery.includes('region') ||
       lowerQuery.includes('area') ||
+      lowerQuery.includes('regions') ||
       lowerQuery.includes('zone')
     ) {
       router.push('/Regions')

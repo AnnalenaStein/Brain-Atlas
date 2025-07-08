@@ -48,7 +48,7 @@
 
     <div class="section">
       <div class="section-title row" style="justify-content: space-between; align-items: center;">
-        <span>🔗 Brain Structure</span>
+        <span>Brain Structure</span>
         <span style="font-size: 20px; color: var(--text-muted); line-height: 1;">⌄</span>
       </div>
       <!-- <ul class="tree">
