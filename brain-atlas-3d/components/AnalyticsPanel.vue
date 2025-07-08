@@ -32,7 +32,7 @@
       </div>
       <div class="button-row">
         <button class="small-button">Comparison</button>
-        <button class="small-button">Manupulate</button>
+        <button class="small-button">Manipulate</button>
       </div>
     </div>
 
@@ -46,6 +46,10 @@
         <button class="icon-button">⏭</button>
       </div>
       <input type="range" class="slider" min="0" max="100" />
+      <div class="row time-row" style="margin-top: -8px;">
+        <span class="time-label">{{ formatTime(start) }}</span>
+        <span class="time-label">{{ formatTime(end) }}</span>
+      </div>
     </div>
 
     <hr />
@@ -257,7 +261,7 @@ hr {
 .slider-range {
   position: absolute;
   height: 100%;
-  background-color: #3b82f6;
+  background-color: #f4f4f4;
   border-radius: 2px;
 }
 
@@ -279,7 +283,7 @@ input[type='range'].thumb::-moz-range-thumb {
   height: 16px;
   background: var(--text-heading);
   border-radius: 50%;
-  border: 2px solid #3b82f6;
+  border: 2px solid #f6f6f6;
   position: relative;
   z-index: 3;
 }

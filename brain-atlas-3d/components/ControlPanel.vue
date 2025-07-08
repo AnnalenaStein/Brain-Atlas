@@ -5,7 +5,8 @@
       <p class="small-text">Edit Activity</p>
       <input type="text" placeholder="Handmovement" class="input" />
       <div class="button-row">
-        <button class="small-button">Filter</button>
+        <button class="small-button" @click="showFilterMenu = !showFilterMenu">Filter</button>
+        <FilterMenu v-if="showFilterMenu" @close="showFilterMenu = false" />
         <button class="small-button">Comparison</button>
 
       </div>
@@ -92,7 +93,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['play-clicked'])
+const showFilterMenu = ref(false)
 // All logic stays unchanged for now
 </script>
 
