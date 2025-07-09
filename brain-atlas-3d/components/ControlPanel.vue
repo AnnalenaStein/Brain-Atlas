@@ -5,7 +5,7 @@
       <p class="small-text">Edit Activity</p>
       <input type="text" placeholder="Handmovement" class="input" />
       <div class="button-row">
-        <button class="small-button" @click="showFilterMenu = !showFilterMenu">Filter</button>
+        <button class="small-button row" @click="showFilterMenu = !showFilterMenu">Filter         <ChevronDownIcon class="w-4 h-4 text-muted ml-2" /></button>
         <FilterMenu v-if="showFilterMenu" @close="showFilterMenu = false" />
         <button class="small-button">Comparison</button>
 
