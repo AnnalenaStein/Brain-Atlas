@@ -18,10 +18,18 @@
       <h3 class="section-title">Play</h3>
       <div class="media-buttons">
         <button class="icon-button">⏮</button>
-        <button class="icon-button">▶️</button>
+        <button class="icon-button" aria-label="Play">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </button>
         <button class="icon-button">⏭</button>
       </div>
       <input type="range" class="slider" />
+      <div class="row time-row" style="margin-top: -8px;">
+        <span class="time-label">{{ formatTime(start) }}</span>
+        <span class="time-label">{{ formatTime(end) }}</span>
+      </div>
     </div>
 
     <hr />
@@ -30,7 +38,9 @@
       <h3 class="section-title">Controls</h3>
       <div class="row">
         <span class="label">Human Model</span>
-        <span class="icon-eye">👁️</span>
+        <span @click="showModel = !showModel">
+          <component :is="showModel ? EyeIcon : EyeSlashIcon" class="w-5 h-5" style="color: var(--text-label)" />
+        </span>
       </div>
       <div class="row">
         <span class="label">Transparency</span>
@@ -47,11 +57,12 @@
     <hr />
 
     <div class="section">
-      <div class="section-title row" style="justify-content: space-between; align-items: center;">
+      <div class="section-title row">
         <span>Brain Structure</span>
-        <span style="font-size: 20px; color: var(--text-muted); line-height: 1;">⌄</span>
+        <ChevronDownIcon class="w-4 h-4 text-muted" />
       </div>
-      <!-- <ul class="tree">
+
+    <!-- <ul class="tree">
         <li>
           <span class="tree-toggle">▾</span> Cerebrum
           <ul>
@@ -62,7 +73,7 @@
           </ul>
         </li>
       </ul> -->
-    </div>
+  </div>
   </div>
 
   <InsightPanel />
@@ -94,14 +105,45 @@
 
 <script setup>
 const showFilterMenu = ref(false)
+import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
+import { ChevronDownIcon } from '@heroicons/vue/24/solid'
+const showModel = ref(true)
 // All logic stays unchanged for now
-</script>
+import { ref, computed, watch } from 'vue'
 
-<style scoped>.control-panel {
+const clusterCount = ref(5)
+const activationThreshold = ref(0.5)
+
+const min = 0
+const max = 60
+const start = ref(5)
+const end = ref(20)
+
+const percentStart = computed(() => (start.value / max) * 100)
+const percentEnd = computed(() => (end.value / max) * 100)
+const rangeWidth = computed(() => percentEnd.value - percentStart.value)
+
+watch([start, end], () => {
+  if (start.value > end.value) {
+    const temp = start.value
+    start.value = end.value
+    end.value = temp
+  }
+})
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60)
+  const s = seconds % 60
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+}
+</script>
+<style scoped>
+
+.control-panel {
   position: absolute;
   left: 24px;
   top: 112px;
-  width: 18vw;
+  width: 17vw;
   padding: 16px;
   border-radius: 8px;
   background: var(--bg-dropdown);
@@ -133,6 +175,7 @@ const showFilterMenu = ref(false)
   border: 1px solid var(--border-default);
   background: var(--bg-input);
   color: var(--text-heading);
+  width: 16vw;
 }
 
 .mode-switch {
@@ -181,14 +224,13 @@ const showFilterMenu = ref(false)
 .section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 4px;
+  margin-bottom: 0px;
 }
 
 .section-title {
   font-size: 16px;
   font-weight: 520;
-  margin-bottom: 4px;
   color: var(--text-subheading);
 }
 
@@ -213,13 +255,22 @@ const showFilterMenu = ref(false)
   color: var(--text-heading);
   font-size: 14px;
   width: 100%;
+  margin-top: 4px;
+  margin-bottom: 2px;
 }
 
 .button-row,
+.media-buttons,
 .button-column {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.button-column {
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .small-button {
@@ -252,20 +303,35 @@ const showFilterMenu = ref(false)
 }
 
 .media-buttons {
-  display: flex;
   justify-content: center;
-  gap: 24px;
+  margin-bottom: 4px;
+  margin-top: -4px;
 }
 
 .slider {
   width: 100%;
   height: 4px;
+  margin: 4px 0 8px 0;
+}
+
+.time-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  margin-top: 0;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .icon-eye {
@@ -294,4 +360,5 @@ hr {
   transform: translateX(-50%);
   z-index: 10;
 }
+
 </style>
