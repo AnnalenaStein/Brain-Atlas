@@ -261,7 +261,7 @@ hr {
 .slider-range {
   position: absolute;
   height: 100%;
-  background-color: #f4f4f4;
+  background-color: #3b82f6;
   border-radius: 2px;
 }
 
